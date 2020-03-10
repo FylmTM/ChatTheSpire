@@ -1,14 +1,13 @@
 package ChatTheSpire.console
 
-import ChatTheSpire.command.CardCommand
-import ChatTheSpire.command.PotionCommand
+import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.util.Spire
 import ChatTheSpire.util.toSafeArrayList
 import basemod.DevConsole
 import basemod.devcommands.ConsoleCommand
 import java.util.ArrayList
 
-class PotionConsoleCommand : ConsoleCommand() {
+class PotionUseConsoleCommand : ConsoleCommand() {
 
     init {
         minExtraTokens = 1
@@ -18,7 +17,7 @@ class PotionConsoleCommand : ConsoleCommand() {
 
     override fun execute(tokens: Array<String>, depth: Int) {
         val parameters = tokens.drop(1).map(String::toInt)
-        if (!PotionCommand.perform(parameters)) {
+        if (!PotionUseCommand.perform(parameters)) {
             DevConsole.log("Failed to use potion.")
         }
     }
@@ -42,6 +41,6 @@ class PotionConsoleCommand : ConsoleCommand() {
 
     override fun errorMsg() {
         DevConsole.couldNotParse()
-        DevConsole.log("syntax: :potion [potion-position] {monster-position}")
+        DevConsole.log("syntax: :potionuse [potion-position] {monster-position}")
     }
 }
