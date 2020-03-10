@@ -1,9 +1,10 @@
 package ChatTheSpire.command
 
+import ChatTheSpire.control.Control
+import ChatTheSpire.control.Job
 import ChatTheSpire.util.Spire
-import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction
+import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.apache.logging.log4j.LogManager
 
 private val logger = LogManager.getLogger(CardCommand::class.java.name)
@@ -11,31 +12,27 @@ private val logger = LogManager.getLogger(CardCommand::class.java.name)
 object CardCommand : Command {
 
     override fun perform(parameters: List<Int>) =
-        execute(parameters = parameters, addAction = true)
+        execute(parameters = parameters, doAction = true)
 
     override fun canPerform(parameters: List<Int>): Boolean =
-        execute(parameters = parameters, addAction = false)
+        execute(parameters = parameters, doAction = false)
 
-    private fun execute(parameters: List<Int>, addAction: Boolean): Boolean {
+    private fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size !in 1..2) {
             logger.info("Invalid parameters size: {}", parameters.size)
             return false
         }
 
-        val cardIndex = parameters[0]
+        val cardPosition = parameters[0]
+        val monsterPosition = parameters.getOrNull(1)
 
-        val card = Spire.hand?.getOrNull(cardIndex - 1)
+        val card = Spire.hand?.getByPosition(cardPosition)
         if (card == null) {
-            logger.info("Invalid card index: {}", cardIndex)
+            logger.info("Invalid card position: {}", cardPosition)
             return false
         }
 
-        val monster = if (parameters.size == 2) {
-            val monsterIndex = parameters[1] - 1
-            Spire.monsters?.getOrNull(monsterIndex)
-        } else {
-            null
-        }
+        val monster = Spire.monsters?.getByPosition(monsterPosition)
 
         if (!card.canUse(Spire.player, monster)) {
             logger.info("Card {} is unusable", card.name)
@@ -50,8 +47,12 @@ object CardCommand : Command {
             return false
         }
 
-        if (addAction) {
-            AbstractDungeon.actionManager.addToBottom(NewQueueCardAction(card, monster))
+        if (doAction) {
+            Job.execute {
+                Control.click(card.hb)
+                (monster?.hb ?: Spire.player?.hb)
+                    ?.let(Control::click)
+            }
         }
 
         return true
