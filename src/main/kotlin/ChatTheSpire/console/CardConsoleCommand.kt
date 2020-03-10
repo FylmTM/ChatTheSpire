@@ -18,7 +18,7 @@ class CardConsoleCommand : ConsoleCommand() {
     override fun execute(tokens: Array<String>, depth: Int) {
         val parameters = tokens.drop(1).map(String::toInt)
         if (!CardCommand.perform(parameters)) {
-            DevConsole.log("Failed to play card.")
+            DevConsole.log("Failed to play card")
         }
     }
 

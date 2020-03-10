@@ -11,13 +11,7 @@ private val logger = LogManager.getLogger(CardCommand::class.java.name)
 
 object CardCommand : Command {
 
-    override fun perform(parameters: List<Int>) =
-        execute(parameters = parameters, doAction = true)
-
-    override fun canPerform(parameters: List<Int>): Boolean =
-        execute(parameters = parameters, doAction = false)
-
-    private fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+    override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size !in 1..2) {
             logger.info("Invalid parameters size: {}", parameters.size)
             return false

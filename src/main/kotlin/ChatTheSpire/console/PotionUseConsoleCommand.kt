@@ -18,7 +18,7 @@ class PotionUseConsoleCommand : ConsoleCommand() {
     override fun execute(tokens: Array<String>, depth: Int) {
         val parameters = tokens.drop(1).map(String::toInt)
         if (!PotionUseCommand.perform(parameters)) {
-            DevConsole.log("Failed to use potion.")
+            DevConsole.log("Failed to use potion")
         }
     }
 

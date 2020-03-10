@@ -1,7 +1,5 @@
 package ChatTheSpire.util
 
-import com.megacrit.cardcrawl.monsters.AbstractMonster
-
 fun <T> List<T>?.toSafeArrayList() =
     if (this == null) ArrayList() else ArrayList(this)
 

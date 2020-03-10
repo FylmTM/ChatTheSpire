@@ -1,7 +1,6 @@
 package ChatTheSpire.console
 
 import ChatTheSpire.command.PotionDestroyCommand
-import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.util.Spire
 import ChatTheSpire.util.toSafeArrayList
 import basemod.DevConsole
@@ -18,7 +17,7 @@ class PotionDestroyConsoleCommand : ConsoleCommand() {
     override fun execute(tokens: Array<String>, depth: Int) {
         val parameters = tokens.drop(1).map(String::toInt)
         if (!PotionDestroyCommand.perform(parameters)) {
-            DevConsole.log("Failed to destroy potion.")
+            DevConsole.log("Failed to destroy potion")
         }
     }
 
