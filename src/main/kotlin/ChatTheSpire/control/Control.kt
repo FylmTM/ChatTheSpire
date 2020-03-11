@@ -34,6 +34,10 @@ object Control {
         sleep(5000)
     }
 
+    fun rest() {
+        Gdx.input.setCursorPosition(10, 35)
+    }
+
     fun hover(hitbox: Hitbox) {
         Gdx.input.setCursorPosition(hitbox.cX.toInt(), Settings.HEIGHT - hitbox.cY.toInt())
         quickSleep()
