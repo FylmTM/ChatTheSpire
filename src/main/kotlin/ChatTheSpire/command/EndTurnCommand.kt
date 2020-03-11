@@ -1,7 +1,7 @@
 package ChatTheSpire.command
 
 import ChatTheSpire.control.Control
-import ChatTheSpire.control.Hitboxes
+import ChatTheSpire.control.Internals
 import ChatTheSpire.control.Job
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.apache.logging.log4j.LogManager
@@ -18,7 +18,8 @@ object EndTurnCommand : Command {
 
         if (doAction) {
             Job.execute {
-                Hitboxes.endTurn?.let(Control::click)
+                Internals.endTurnHitbox?.let(Control::click)
+                Control.rest()
             }
         }
 

@@ -2,6 +2,7 @@ package ChatTheSpire.command
 
 import ChatTheSpire.control.Control
 import ChatTheSpire.control.Job
+import ChatTheSpire.util.Spire
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import org.apache.logging.log4j.LogManager
@@ -18,11 +19,16 @@ object DialogCommand : Command {
 
         val optionPosition = parameters[0]
 
-        val option = RoomEventDialog.optionList?.getByPosition(optionPosition)
+        val roomOption = RoomEventDialog.optionList?.getByPosition(optionPosition)
+        val imageOption = Spire.room?.event?.imageEventText?.optionList?.getByPosition(optionPosition)
+
+        val option = roomOption ?: imageOption
+
         if (option == null) {
-            logger.info("Invalid option position: {}", optionPosition)
+            logger.info("Invalid dialog option position: {}", optionPosition)
             return false
         }
+
         if (option.isDisabled) {
             logger.info("Option[{}] is disabled")
             return false

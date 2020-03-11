@@ -46,6 +46,7 @@ object CardCommand : Command {
                 Control.click(card.hb)
                 (monster?.hb ?: Spire.player?.hb)
                     ?.let(Control::click)
+                Control.rest()
             }
         }
 

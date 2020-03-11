@@ -3,6 +3,7 @@ package ChatTheSpire
 import ChatTheSpire.console.CardConsoleCommand
 import ChatTheSpire.console.DialogConsoleCommand
 import ChatTheSpire.console.EndTurnConsoleCommand
+import ChatTheSpire.console.MapConsoleCommand
 import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
 import ChatTheSpire.console.TestConsoleCommand
@@ -21,6 +22,8 @@ fun initializeCommands() {
     ConsoleCommand.addCommand("pd", PotionDestroyConsoleCommand::class.java)
 
     // Interactions
+    ConsoleCommand.addCommand(":map", MapConsoleCommand::class.java)
+    ConsoleCommand.addCommand("m", MapConsoleCommand::class.java)
     ConsoleCommand.addCommand(":dialog", DialogConsoleCommand::class.java)
     ConsoleCommand.addCommand("d", DialogConsoleCommand::class.java)
     ConsoleCommand.addCommand(":endturn", EndTurnConsoleCommand::class.java)

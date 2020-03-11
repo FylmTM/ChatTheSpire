@@ -1,7 +1,7 @@
 package ChatTheSpire.command
 
 import ChatTheSpire.control.Control
-import ChatTheSpire.control.Hitboxes
+import ChatTheSpire.control.Internals
 import ChatTheSpire.control.Job
 import ChatTheSpire.util.Spire
 import ChatTheSpire.util.getByPosition
@@ -42,10 +42,11 @@ object PotionUseCommand : Command {
         if (doAction) {
             Job.execute {
                 Control.click(potion.hb)
-                Hitboxes.potionUse?.let(Control::click)
+                Internals.potionUseHitbox?.let(Control::click)
 
                 if (potion.targetRequired) {
                     monster?.hb?.let(Control::click)
+                    Control.rest()
                 }
             }
         }
