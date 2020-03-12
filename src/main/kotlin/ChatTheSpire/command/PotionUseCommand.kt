@@ -1,9 +1,9 @@
 package ChatTheSpire.command
 
-import ChatTheSpire.control.Control
-import ChatTheSpire.control.Internals
-import ChatTheSpire.control.Job
-import ChatTheSpire.util.Spire
+import ChatTheSpire.util.Automation
+import ChatTheSpire.util.Internals
+import ChatTheSpire.util.Job
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.potions.PotionSlot
 import org.apache.logging.log4j.LogManager
@@ -21,7 +21,7 @@ object PotionUseCommand : Command {
         val potionPosition = parameters[0]
         val monsterPosition = parameters.getOrNull(1)
 
-        val potion = Spire.potions?.getByPosition(potionPosition)
+        val potion = SafeSpire.potions?.getByPosition(potionPosition)
         if (potion == null) {
             logger.info("Invalid potion position: {}", potionPosition)
             return false
@@ -32,7 +32,7 @@ object PotionUseCommand : Command {
             return false
         }
 
-        val monster = Spire.monsters?.getByPosition(monsterPosition)
+        val monster = SafeSpire.monsters?.getByPosition(monsterPosition)
 
         if (potion.targetRequired && monster == null) {
             logger.info("Target required for potion with index: {}", potionPosition)
@@ -41,12 +41,12 @@ object PotionUseCommand : Command {
 
         if (doAction) {
             Job.execute {
-                Control.click(potion.hb)
-                Internals.potionUseHitbox?.let(Control::click)
+                Automation.click(potion.hb)
+                Internals.potionUseHitbox?.let(Automation::click)
 
                 if (potion.targetRequired) {
-                    monster?.hb?.let(Control::click)
-                    Control.rest()
+                    monster?.hb?.let(Automation::click)
+                    Automation.rest()
                 }
             }
         }

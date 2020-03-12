@@ -1,7 +1,7 @@
 package ChatTheSpire.console
 
 import ChatTheSpire.command.CardCommand
-import ChatTheSpire.util.Spire
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.toSafeArrayList
 import basemod.DevConsole
 import basemod.devcommands.ConsoleCommand
@@ -24,12 +24,12 @@ class CardConsoleCommand : ConsoleCommand() {
 
     override fun extraOptions(tokens: Array<String>, depth: Int): ArrayList<String> {
         if (tokens.size == 2) {
-            return Spire.hand
+            return SafeSpire.hand
                 ?.mapIndexed() { i, card -> "${i + 1} :: ${card.name}" }
                 .toSafeArrayList()
         }
         if (tokens.size == 3) {
-            return Spire.monsters
+            return SafeSpire.monsters
                 ?.mapIndexed() { i, monster -> "${i + 1} :: ${monster.name}" }
                 .toSafeArrayList()
         }

@@ -1,4 +1,4 @@
-package ChatTheSpire.control
+package ChatTheSpire.util
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.helpers.Hitbox

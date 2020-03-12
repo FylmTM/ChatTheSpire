@@ -1,9 +1,9 @@
 package ChatTheSpire.command
 
-import ChatTheSpire.control.Control
-import ChatTheSpire.control.Internals
-import ChatTheSpire.control.Job
-import ChatTheSpire.util.Spire
+import ChatTheSpire.util.Automation
+import ChatTheSpire.util.Internals
+import ChatTheSpire.util.Job
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.potions.PotionSlot
 import org.apache.logging.log4j.LogManager
@@ -20,7 +20,7 @@ object PotionDestroyCommand : Command {
 
         val potionPosition = parameters[0]
 
-        val potion = Spire.potions?.getByPosition(potionPosition)
+        val potion = SafeSpire.potions?.getByPosition(potionPosition)
         if (potion == null) {
             logger.info("Invalid potion position: {}", potionPosition)
             return false
@@ -33,9 +33,9 @@ object PotionDestroyCommand : Command {
 
         if (doAction) {
             Job.execute {
-                Control.click(potion.hb)
-                Internals.potionDestroyHitbox?.let(Control::click)
-                Control.rest()
+                Automation.click(potion.hb)
+                Internals.potionDestroyHitbox?.let(Automation::click)
+                Automation.rest()
             }
         }
 

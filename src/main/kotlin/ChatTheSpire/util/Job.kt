@@ -1,4 +1,4 @@
-package ChatTheSpire.control
+package ChatTheSpire.util
 
 import java.util.concurrent.Executors
 

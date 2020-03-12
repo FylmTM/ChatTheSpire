@@ -1,7 +1,7 @@
 package ChatTheSpire.console
 
 import ChatTheSpire.command.PotionDestroyCommand
-import ChatTheSpire.util.Spire
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.toSafeArrayList
 import basemod.DevConsole
 import basemod.devcommands.ConsoleCommand
@@ -23,7 +23,7 @@ class PotionDestroyConsoleCommand : ConsoleCommand() {
 
     override fun extraOptions(tokens: Array<String>, depth: Int): ArrayList<String> {
         if (tokens.size == 2) {
-            return Spire.potions
+            return SafeSpire.potions
                 ?.mapIndexed() { i, potion -> "${i + 1} :: ${potion.name}" }
                 .toSafeArrayList()
         }

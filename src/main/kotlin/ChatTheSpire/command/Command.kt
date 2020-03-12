@@ -1,7 +1,5 @@
 package ChatTheSpire.command
 
-import ChatTheSpire.control.Control
-
 interface Command {
 
     fun perform(parameters: List<Int>): Boolean =

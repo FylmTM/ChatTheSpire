@@ -1,8 +1,8 @@
 package ChatTheSpire.command
 
-import ChatTheSpire.control.Control
-import ChatTheSpire.control.Job
-import ChatTheSpire.util.Spire
+import ChatTheSpire.util.Automation
+import ChatTheSpire.util.Job
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget
 import org.apache.logging.log4j.LogManager
@@ -20,15 +20,15 @@ object CardCommand : Command {
         val cardPosition = parameters[0]
         val monsterPosition = parameters.getOrNull(1)
 
-        val card = Spire.hand?.getByPosition(cardPosition)
+        val card = SafeSpire.hand?.getByPosition(cardPosition)
         if (card == null) {
             logger.info("Invalid card position: {}", cardPosition)
             return false
         }
 
-        val monster = Spire.monsters?.getByPosition(monsterPosition)
+        val monster = SafeSpire.monsters?.getByPosition(monsterPosition)
 
-        if (!card.canUse(Spire.player, monster)) {
+        if (!card.canUse(SafeSpire.player, monster)) {
             logger.info("Card {} is unusable", card.name)
             return false
         }
@@ -43,10 +43,10 @@ object CardCommand : Command {
 
         if (doAction) {
             Job.execute {
-                Control.click(card.hb)
-                (monster?.hb ?: Spire.player?.hb)
-                    ?.let(Control::click)
-                Control.rest()
+                Automation.click(card.hb)
+                (monster?.hb ?: SafeSpire.player?.hb)
+                    ?.let(Automation::click)
+                Automation.rest()
             }
         }
 

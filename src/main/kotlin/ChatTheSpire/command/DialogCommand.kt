@@ -1,8 +1,8 @@
 package ChatTheSpire.command
 
-import ChatTheSpire.control.Control
-import ChatTheSpire.control.Job
-import ChatTheSpire.util.Spire
+import ChatTheSpire.util.Automation
+import ChatTheSpire.util.Job
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import org.apache.logging.log4j.LogManager
@@ -20,7 +20,7 @@ object DialogCommand : Command {
         val optionPosition = parameters[0]
 
         val roomOption = RoomEventDialog.optionList?.getByPosition(optionPosition)
-        val imageOption = Spire.room?.event?.imageEventText?.optionList?.getByPosition(optionPosition)
+        val imageOption = SafeSpire.room?.event?.imageEventText?.optionList?.getByPosition(optionPosition)
 
         val option = roomOption ?: imageOption
 
@@ -36,8 +36,8 @@ object DialogCommand : Command {
 
         if (doAction) {
             Job.execute {
-                Control.click(option.hb)
-                Control.rest()
+                Automation.click(option.hb)
+                Automation.rest()
             }
         }
 

@@ -1,4 +1,4 @@
-package ChatTheSpire.control
+package ChatTheSpire.util
 
 import com.badlogic.gdx.Gdx
 import com.megacrit.cardcrawl.core.Settings
@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.helpers.Hitbox
 import java.awt.Robot
 import java.awt.event.InputEvent
 
-object Control {
+object Automation {
 
     private val bot = Robot()
 

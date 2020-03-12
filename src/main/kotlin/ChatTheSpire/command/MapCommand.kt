@@ -1,8 +1,8 @@
 package ChatTheSpire.command
 
-import ChatTheSpire.control.Control
-import ChatTheSpire.control.Job
-import ChatTheSpire.util.Spire
+import ChatTheSpire.util.Automation
+import ChatTheSpire.util.Job
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
 import org.apache.logging.log4j.LogManager
 
@@ -18,7 +18,7 @@ object MapCommand : Command {
 
         val mapNodePosition = parameters[0]
 
-        val nextMapNodes = Spire.nextMapNodes
+        val nextMapNodes = SafeSpire.nextMapNodes
         val mapNode = nextMapNodes.getByPosition(mapNodePosition)
 
         if (mapNode == null) {
@@ -28,7 +28,7 @@ object MapCommand : Command {
 
         if (doAction) {
             Job.execute {
-                Control.click(mapNode.hb)
+                Automation.click(mapNode.hb)
             }
         }
 
