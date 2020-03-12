@@ -29,6 +29,7 @@ class ChatTheSpire : PostInitializeSubscriber {
 
     override fun receivePostInitialize() {
         initializeSettings()
-        initializeCommands()
+        initializeConsoleCommands()
+        initializeControlPanel()
     }
 }
