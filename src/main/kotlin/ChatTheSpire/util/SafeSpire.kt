@@ -35,7 +35,7 @@ object SafeSpire {
                 return listOf()
             }
 
-            return Internals.visibleMapNodes
+            return SpireInternals.visibleMapNodes
                 .filter {
                     if (!AbstractDungeon.firstRoomChosen && it.y == 0) {
                         true

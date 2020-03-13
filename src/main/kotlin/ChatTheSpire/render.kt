@@ -2,6 +2,7 @@ package ChatTheSpire
 
 import ChatTheSpire.util.SafeSpire
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Align
@@ -13,7 +14,15 @@ import com.megacrit.cardcrawl.potions.PotionSlot
 
 fun renderHints(sb: SpriteBatch, font: BitmapFont) {
     // State
-    FontHelper.renderFontLeftTopAligned(sb, FontHelper.tipBodyFont, GameState.state.debug, 30.0F, Settings.HEIGHT * 0.8F, Color.WHITE)
+    val gameState = GameState.state
+    FontHelper.renderFont(
+        sb,
+        FontHelper.tipBodyFont,
+        gameState.debug,
+        30.0F * Settings.scale,
+        Settings.HEIGHT * 0.85F,
+        Color.WHITE
+    )
 
     // Potions
     if (AbstractDungeon.topPanel?.potionUi?.isHidden != false) {
@@ -50,7 +59,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                     sb,
                     "${i + 1}",
                     card.hb.x + card.hb.width * ((i).toFloat() / size),
-                    card.hb.y + card.hb.height + 15.0F + Settings.scale
+                    card.hb.y + card.hb.height + 30.0F + Settings.scale
                 )
             }
         }

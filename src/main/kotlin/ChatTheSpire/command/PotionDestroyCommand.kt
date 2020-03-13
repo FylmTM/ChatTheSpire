@@ -1,7 +1,7 @@
 package ChatTheSpire.command
 
 import ChatTheSpire.util.Automation
-import ChatTheSpire.util.Internals
+import ChatTheSpire.util.SpireInternals
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
@@ -38,7 +38,7 @@ object PotionDestroyCommand : Command {
         if (doAction) {
             Job.execute {
                 Automation.click(potion.hb)
-                Internals.potionDestroyHitbox?.let(Automation::click)
+                SpireInternals.potionDestroyHitbox?.let(Automation::click)
                 Automation.rest()
             }
         }

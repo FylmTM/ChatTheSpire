@@ -12,7 +12,7 @@ fun <T> Class<T>.getAsPublicField(name: String) =
         it.isAccessible = true
     }!!
 
-object Internals {
+object SpireInternals {
 
     private val potionUseField = PotionPopUp::class.java
         .getAsPublicField("hbTop")
@@ -32,6 +32,7 @@ object Internals {
     val endTurnHitbox: Hitbox?
         get() = endTurnField.get(AbstractDungeon.overlayMenu.endTurnButton) as Hitbox
 
+    @Suppress("UNCHECKED_CAST")
     val visibleMapNodes: ArrayList<MapRoomNode>
         get() = visibleMapNodesField.get(AbstractDungeon.dungeonMapScreen) as ArrayList<MapRoomNode>
 }
