@@ -18,9 +18,9 @@ object VotingManager {
 
     val open = SimpleBooleanProperty(false)
     val results = mutableListOf<VoteResult>().asObservable()
-    private val userCache: MutableMap<String, String> = HashMap()
+    private val userCache: MutableSet<String> = HashSet()
     private val acceptedCache: MutableMap<String, VoteResult> = HashMap()
-    private val rejectedCache: MutableMap<String, Boolean> = HashMap()
+    private val rejectedCache: MutableSet<String> = HashSet()
 
     fun start() {
         results.clear()
@@ -49,6 +49,7 @@ object VotingManager {
             } else if (acceptedCache.contains(command)) {
                 val result = acceptedCache[command]!!
                 result.countProperty.set(result.countProperty.value + 1)
+                userCache.add(user)
                 results.sortByDescending { it.count }
                 CommandResultLogEntryStatus.ACCEPTED
             } else {
@@ -57,10 +58,11 @@ object VotingManager {
                     val result = VoteResult(command, 1)
                     results.add(result)
                     results.sortByDescending { it.count }
+                    userCache.add(user)
                     acceptedCache[command] = result
                     CommandResultLogEntryStatus.ACCEPTED
                 } else {
-                    rejectedCache[command] = true
+                    rejectedCache.add(command)
                     CommandResultLogEntryStatus.REJECTED
                 }
             }

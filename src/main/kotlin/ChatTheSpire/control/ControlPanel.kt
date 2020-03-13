@@ -6,6 +6,7 @@ import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.layout.Priority
 import javafx.scene.text.FontWeight
+import javafx.stage.Stage
 import tornadofx.*
 
 fun main(args: Array<String>) {
@@ -13,7 +14,13 @@ fun main(args: Array<String>) {
 }
 
 class ControlPanel : App(ControlView::class) {
+    override fun start(stage: Stage) {
+        super.start(stage)
+    }
 
+    override fun stop() {
+        super.stop()
+    }
 }
 
 class ControlView : View() {
@@ -31,11 +38,17 @@ class ControlView : View() {
 }
 
 class VotingView : View() {
+    val autoVoter: AutoVoter = AutoVoter()
+
     override val root = vbox {
+        spacing = 10.0
         hbox {
             alignment = Pos.CENTER_LEFT
             spacing = 5.0
+            hiddenWhen(autoVoter.active)
+            managedWhen(visibleProperty())
             label("Voting") {
+                prefWidth = 70.0
                 style {
                     fontSize = 20.px
                     fontWeight = FontWeight.BOLD
@@ -60,6 +73,72 @@ class VotingView : View() {
                 }
             }
         }
+        hbox {
+            alignment = Pos.CENTER_LEFT
+            spacing = 5.0
+            label("Auto") {
+                prefWidth = 70.0
+                style {
+                    fontSize = 20.px
+                    fontWeight = FontWeight.BOLD
+                }
+            }
+            button("Start") {
+                disableWhen(autoVoter.active)
+                action {
+                    autoVoter.begin()
+                }
+            }
+            button("Stop") {
+                disableWhen(autoVoter.active.not())
+                action {
+                    autoVoter.pause()
+                }
+            }
+        }
+        hbox {
+            alignment = Pos.CENTER_LEFT
+            spacing = 5.0
+            label {
+                style {
+                    fontSize = 20.px
+                    fontWeight = FontWeight.BOLD
+                }
+                textProperty().bind(autoVoter.phase.stringBinding {
+                    when (it) {
+                        Phase.Voting -> "Vote!"
+                        Phase.VotingStopped -> "Stop."
+                        Phase.Pause -> "Wait..."
+                        else -> "Wait..."
+                    }
+                })
+                prefWidth = 70.0
+            }
+            val bar = progressbar {
+                prefWidth = 170.0
+                prefHeight = 50.0
+                progressProperty().bind(autoVoter.elapsed.doubleBinding {
+                    when (autoVoter.phase.value) {
+                        Phase.Voting -> it!!.toDouble() / VOTING_SECONDS.toDouble()
+                        Phase.VotingStopped -> it!!.toDouble() / VOTING_STOPPED_SECONDS.toDouble()
+                        Phase.Pause -> it!!.toDouble() / PAUSE_SECONDS.toDouble()
+                    }
+                })
+            }
+            autoVoter.phase.addListener { _, _, new ->
+                when (new) {
+                    Phase.Voting -> bar.style {
+                        accentColor = c("#3DCC91")
+                    }
+                    Phase.VotingStopped -> bar.style {
+                        accentColor = c("#FF7373")
+                    }
+                    Phase.Pause -> bar.style {
+                        accentColor = c("#8A9BA8")
+                    }
+                }
+            }
+        }
         tableview(VotingManager.results) {
             prefHeight = 150.0
             column("Command", VoteResult::commandProperty) {
@@ -69,6 +148,10 @@ class VotingView : View() {
                 prefWidth = 70.0
             }
         }
+    }
+
+    init {
+        autoVoter.start()
     }
 }
 
