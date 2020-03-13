@@ -1,6 +1,8 @@
 package ChatTheSpire.control
 
 import ChatTheSpire.command.CardCommand
+import com.megacrit.cardcrawl.actions.GameActionManager
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import javafx.animation.AnimationTimer
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleLongProperty
@@ -61,10 +63,17 @@ class AutoVoter : AnimationTimer() {
                     start = now
                 }
                 Phase.Pause -> if (elapsed.value > PAUSE_SECONDS.value) {
-                    logger.info("Transition to Voting")
-                    VotingManager.start()
-                    phase.set(Phase.Voting)
-                    start = now
+                    val shouldTransition = AbstractDungeon.isScreenUp || (
+                        !AbstractDungeon.actionManager.turnHasEnded
+                            && AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER
+                        )
+
+                    if (shouldTransition) {
+                        logger.info("Transition to Voting")
+                        VotingManager.start()
+                        phase.set(Phase.Voting)
+                        start = now
+                    }
                 }
             }
         } else {

@@ -40,6 +40,35 @@ class VotingView : View() {
         hbox {
             alignment = Pos.CENTER_LEFT
             spacing = 5.0
+            label("Auto") {
+                prefWidth = 70.0
+                style {
+                    fontSize = 20.px
+                    fontWeight = FontWeight.BOLD
+                }
+            }
+            button("Start") {
+                disableWhen(autoVoter.active)
+                action {
+                    autoVoter.begin()
+                }
+            }
+            button("Stop") {
+                disableWhen(autoVoter.active.not())
+                action {
+                    autoVoter.pause()
+                }
+            }
+            textfield(VOTING_SECONDS) {
+                prefWidth = 30.0
+            }
+            textfield(PAUSE_SECONDS) {
+                prefWidth = 30.0
+            }
+        }
+        hbox {
+            alignment = Pos.CENTER_LEFT
+            spacing = 5.0
             hiddenWhen(autoVoter.active)
             managedWhen(visibleProperty())
             label("Voting") {
@@ -66,35 +95,6 @@ class VotingView : View() {
                 action {
                     VotingManager.perform()
                 }
-            }
-        }
-        hbox {
-            alignment = Pos.CENTER_LEFT
-            spacing = 5.0
-            label("Auto") {
-                prefWidth = 70.0
-                style {
-                    fontSize = 20.px
-                    fontWeight = FontWeight.BOLD
-                }
-            }
-            button("Start") {
-                disableWhen(autoVoter.active)
-                action {
-                    autoVoter.begin()
-                }
-            }
-            button("Stop") {
-                disableWhen(autoVoter.active.not())
-                action {
-                    autoVoter.pause()
-                }
-            }
-            textfield(VOTING_SECONDS) {
-                prefWidth = 30.0
-            }
-            textfield(PAUSE_SECONDS) {
-                prefWidth = 30.0
             }
         }
         borderpane {

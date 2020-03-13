@@ -6,6 +6,7 @@ import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget
 import org.apache.logging.log4j.LogManager
+import java.awt.event.KeyEvent
 
 private val logger = LogManager.getLogger(CardCommand::class.java.name)
 
@@ -43,7 +44,21 @@ object CardCommand : Command {
 
         if (doAction) {
             Job.execute {
-                Automation.click(card.hb)
+                Automation.keyPress(
+                    when (cardPosition) {
+                        1 -> KeyEvent.VK_1
+                        2 -> KeyEvent.VK_2
+                        3 -> KeyEvent.VK_3
+                        4 -> KeyEvent.VK_4
+                        5 -> KeyEvent.VK_5
+                        6 -> KeyEvent.VK_6
+                        7 -> KeyEvent.VK_7
+                        8 -> KeyEvent.VK_8
+                        9 -> KeyEvent.VK_9
+                        10 -> KeyEvent.VK_0
+                        else -> KeyEvent.VK_1
+                    }
+                )
                 (monster?.hb ?: SafeSpire.player?.hb)
                     ?.let(Automation::click)
                 Automation.rest()

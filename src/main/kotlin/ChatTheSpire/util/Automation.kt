@@ -38,8 +38,20 @@ object Automation {
         Gdx.input.setCursorPosition(10, 35)
     }
 
+    fun keyPress(key: Int) {
+        bot.keyPress(key)
+        quickSleep()
+        bot.keyRelease(key)
+        quickSleep()
+    }
+
     fun hover(hitbox: Hitbox) {
         Gdx.input.setCursorPosition(hitbox.cX.toInt(), Settings.HEIGHT - hitbox.cY.toInt())
+        quickSleep()
+    }
+
+    fun hover(x: Int, y: Int) {
+        Gdx.input.setCursorPosition(x, Settings.HEIGHT - y)
         quickSleep()
     }
 

@@ -29,6 +29,7 @@ object MapCommand : Command {
         if (doAction) {
             Job.execute {
                 Automation.click(mapNode.hb)
+                Automation.rest()
             }
         }
 
