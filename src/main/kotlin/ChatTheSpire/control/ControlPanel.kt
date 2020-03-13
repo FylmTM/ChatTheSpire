@@ -21,6 +21,9 @@ class ControlView : View() {
         prefWidth = 250.0
         spacing = 10.0
         vgrow = Priority.ALWAYS
+        style {
+            padding = box(5.px)
+        }
     }
 
     init {
@@ -132,43 +135,41 @@ class VotingView : View() {
                 }
             }
         }
-        hbox {
-            alignment = Pos.CENTER_LEFT
-            spacing = 5.0
+        val bar = progressbar {
             hiddenWhen(autoVoter.active.not())
             managedWhen(visibleProperty())
-            val bar = progressbar {
-                prefWidth = 250.0
-                prefHeight = 50.0
-                progressProperty().bind(autoVoter.elapsed.doubleBinding {
-                    when (autoVoter.phase.value) {
-                        Phase.Voting -> it!!.toDouble() / VOTING_SECONDS.toDouble()
-                        Phase.VotingStopped -> it!!.toDouble() / VOTING_STOPPED_SECONDS.toDouble()
-                        Phase.Pause -> it!!.toDouble() / PAUSE_SECONDS.toDouble()
-                    }
-                })
-                style {
-                    accentColor = c("#8A9BA8")
+            prefWidth = Double.MAX_VALUE
+            minHeight = 50.0
+            prefHeight = 50.0
+            progressProperty().bind(autoVoter.elapsed.doubleBinding {
+                when (autoVoter.phase.value) {
+                    Phase.Voting -> it!!.toDouble() / VOTING_SECONDS.toDouble()
+                    Phase.VotingStopped -> it!!.toDouble() / VOTING_STOPPED_SECONDS.toDouble()
+                    Phase.Pause -> it!!.toDouble() / PAUSE_SECONDS.toDouble()
                 }
+            })
+            style {
+                accentColor = c("#8A9BA8")
             }
-            autoVoter.phase.addListener { _, _, new ->
-                when (new) {
-                    Phase.Voting -> bar.style {
-                        accentColor = c("#3DCC91")
-                    }
-                    Phase.VotingStopped -> bar.style {
-                        accentColor = c("#FF7373")
-                    }
-                    Phase.Pause -> bar.style {
-                        accentColor = c("#8A9BA8")
-                    }
+        }
+        autoVoter.phase.addListener { _, _, new ->
+            when (new) {
+                Phase.Voting -> bar.style {
+                    accentColor = c("#3DCC91")
+                }
+                Phase.VotingStopped -> bar.style {
+                    accentColor = c("#FF7373")
+                }
+                Phase.Pause -> bar.style {
+                    accentColor = c("#8A9BA8")
                 }
             }
         }
         tableview(VotingManager.results) {
+            minHeight = 150.0
             prefHeight = 150.0
             column("Command", VoteResult::commandProperty) {
-                prefWidth = 180.0
+                prefWidth = 170.0
             }
             column("Count", VoteResult::countProperty) {
                 prefWidth = 70.0
@@ -186,6 +187,7 @@ class CommandLogView : View() {
 
     override val root = vbox {
         vgrow = Priority.ALWAYS
+        spacing = 10.0
         textfield(input) {
             promptText = "Command"
             action {
