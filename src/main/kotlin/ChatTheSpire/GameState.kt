@@ -19,28 +19,43 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom
 
 object GameState {
 
-    enum class State(val title: String, val commands: List<Command>) {
-        UNKNOWN("Unknown", emptyList()),
-        NOT_IN_DUNGEON("Not in dungeon", emptyList()),
+    enum class State(
+        val title: String,
+        val defaultCommand: Command?,
+        val commands: List<Command>
+    ) {
+        UNKNOWN(
+            title = "Unknown",
+            defaultCommand = null,
+            commands = emptyList()
+        ),
+        NOT_IN_DUNGEON(
+            title = "Not in dungeon",
+            defaultCommand = null,
+            commands = emptyList()
+        ),
         DIALOG(
-            "Dialog",
-            listOf(
+            title = "Dialog",
+            defaultCommand = DialogCommand,
+            commands = listOf(
                 DialogCommand,
                 PotionDestroyCommand
             )
         ),
         COMBAT(
-            "Combat",
-            listOf(
-                EndTurnCommand,
+            title = "Combat",
+            defaultCommand = CardCommand,
+            commands = listOf(
                 CardCommand,
+                PotionUseCommand,
                 PotionDestroyCommand,
-                PotionUseCommand
+                EndTurnCommand
             )
         ),
         MAP(
-            "Map",
-            listOf(
+            title = "Map",
+            defaultCommand = MapCommand,
+            commands = listOf(
                 MapCommand,
                 PotionDestroyCommand
             )
@@ -48,7 +63,7 @@ object GameState {
 
         val prefixes = commands.map(Command::prefix).toHashSet()
         val syntax = commands.map(Command::syntax).joinToString("\n")
-        val debug = "$title commands:\n\n${syntax}".trim()
+        val debug = "$syntax".trim()
     }
 
     val state: State

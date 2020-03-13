@@ -4,13 +4,11 @@ import basemod.BaseMod
 import basemod.interfaces.PostInitializeSubscriber
 import basemod.interfaces.PostRenderSubscriber
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer
 import com.megacrit.cardcrawl.core.Settings
-import com.megacrit.cardcrawl.helpers.ImageMaster
 import org.apache.logging.log4j.LogManager
 
 private val logger = LogManager.getLogger(ChatTheSpire::class.java.name)

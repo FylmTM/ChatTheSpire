@@ -84,13 +84,19 @@ object CommandManager {
 }
 
 private val whitespaceRegex = "\\s+".toRegex()
-private val validCommandRegex = "^\\w+( \\d+)*$".toRegex()
+private val commandWithoutPrefixRegex = "^\\d+(\\s+\\d+)*$".toRegex()
+private val validCommandRegex = "^[a-zA-Z]+(\\s+\\d+)*$".toRegex()
 
 fun extract(command: String): Pair<Command, List<Int>>? {
+    val gameState = GameState.state
     if (command.isBlank()) {
         return null
     }
     val cleanCommand = command.trim().toLowerCase()
+    if (gameState.defaultCommand != null && cleanCommand.matches(commandWithoutPrefixRegex)) {
+        return Pair(gameState.defaultCommand, cleanCommand.split(whitespaceRegex).map(String::toInt))
+    }
+
     if (!cleanCommand.matches(validCommandRegex)) {
         return null
     }

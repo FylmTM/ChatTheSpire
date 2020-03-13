@@ -13,7 +13,7 @@ object DialogCommand : Command {
 
     override val prefix: String = "dialog"
 
-    override val syntax: String = "dialog [option]"
+    override val syntax: String = "[option] - pick dialog option"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size != 1) {

@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleLongProperty
 import javafx.beans.property.SimpleObjectProperty
 import org.apache.logging.log4j.LogManager
-import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 
 enum class Phase {

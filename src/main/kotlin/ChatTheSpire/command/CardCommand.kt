@@ -12,9 +12,9 @@ private val logger = LogManager.getLogger(CardCommand::class.java.name)
 
 object CardCommand : Command {
 
-    override val prefix: String = "card"
+    override val prefix: String = "c"
 
-    override val syntax: String = "card [position]\ncard [position] [monster]"
+    override val syntax: String = "[position] - play card\n[position] [monster] - play card on monster"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size !in 1..2) {

@@ -12,7 +12,7 @@ object MapCommand : Command {
 
     override val prefix: String = "map"
 
-    override val syntax: String = "map [node]"
+    override val syntax: String = "[node] - select map node"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size != 1) {

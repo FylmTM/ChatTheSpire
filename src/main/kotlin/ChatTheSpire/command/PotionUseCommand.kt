@@ -1,9 +1,9 @@
 package ChatTheSpire.command
 
 import ChatTheSpire.util.Automation
-import ChatTheSpire.util.SpireInternals
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
+import ChatTheSpire.util.SpireInternals
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.potions.PotionSlot
 import org.apache.logging.log4j.LogManager
@@ -12,9 +12,9 @@ private val logger = LogManager.getLogger(PotionUseCommand::class.java.name)
 
 object PotionUseCommand : Command {
 
-    override val prefix: String = "usepotion"
+    override val prefix: String = "p"
 
-    override val syntax: String = "usepotion [slot]\nusepotion [slot] [monster]"
+    override val syntax: String = "p [slot] - drink potion\np [slot] [monster] - throw potion at monster"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size !in 1..2) {

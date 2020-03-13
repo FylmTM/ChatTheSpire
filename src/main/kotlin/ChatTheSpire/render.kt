@@ -2,7 +2,6 @@ package ChatTheSpire
 
 import ChatTheSpire.util.SafeSpire
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Align
@@ -20,7 +19,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
         FontHelper.tipBodyFont,
         gameState.debug,
         30.0F * Settings.scale,
-        Settings.HEIGHT * 0.85F,
+        Settings.HEIGHT * 0.80F,
         Color.WHITE
     )
 
