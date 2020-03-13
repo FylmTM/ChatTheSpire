@@ -1,15 +1,20 @@
 package ChatTheSpire
 
 import ChatTheSpire.util.SafeSpire
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Align
 import com.megacrit.cardcrawl.core.Settings
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
+import com.megacrit.cardcrawl.helpers.FontHelper
 import com.megacrit.cardcrawl.potions.PotionSlot
 
 fun renderHints(sb: SpriteBatch, font: BitmapFont) {
+    // State
+    FontHelper.renderFontLeftTopAligned(sb, FontHelper.tipBodyFont, GameState.state.debug, 30.0F, Settings.HEIGHT * 0.8F, Color.WHITE)
+
     // Potions
     if (AbstractDungeon.topPanel?.potionUi?.isHidden != false) {
         SafeSpire.potions?.forEachIndexed { i, potion ->

@@ -10,6 +10,10 @@ private val logger = LogManager.getLogger(EndTurnCommand::class.java.name)
 
 object EndTurnCommand : Command {
 
+    override val prefix: String = "endturn"
+
+    override val syntax: String = "endturn"
+
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (!AbstractDungeon.overlayMenu.endTurnButton.enabled) {
             logger.info("End turn button is not enabled")

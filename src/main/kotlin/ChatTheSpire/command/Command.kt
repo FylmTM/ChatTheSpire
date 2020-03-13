@@ -2,6 +2,10 @@ package ChatTheSpire.command
 
 interface Command {
 
+    val prefix: String
+
+    val syntax: String
+
     fun perform(parameters: List<Int>): Boolean =
         execute(parameters, doAction = true)
 

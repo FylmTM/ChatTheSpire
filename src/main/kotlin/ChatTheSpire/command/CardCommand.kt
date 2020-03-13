@@ -12,6 +12,10 @@ private val logger = LogManager.getLogger(CardCommand::class.java.name)
 
 object CardCommand : Command {
 
+    override val prefix: String = "card"
+
+    override val syntax: String = "card [position]\ncard [position] [monster]"
+
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size !in 1..2) {
             logger.info("Invalid parameters size: {}", parameters.size)

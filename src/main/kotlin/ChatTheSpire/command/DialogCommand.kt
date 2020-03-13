@@ -11,6 +11,10 @@ private val logger = LogManager.getLogger(PotionDestroyCommand::class.java.name)
 
 object DialogCommand : Command {
 
+    override val prefix: String = "dialog"
+
+    override val syntax: String = "dialog [option]"
+
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size != 1) {
             logger.info("Invalid parameters size: {}", parameters.size)

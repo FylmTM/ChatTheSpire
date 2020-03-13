@@ -12,6 +12,10 @@ private val logger = LogManager.getLogger(PotionDestroyCommand::class.java.name)
 
 object PotionDestroyCommand : Command {
 
+    override val prefix: String = "destroypotion"
+
+    override val syntax: String = "destroypotion [slot]"
+
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size != 1) {
             logger.info("Invalid parameters size: {}", parameters.size)

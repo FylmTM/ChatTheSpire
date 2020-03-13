@@ -1,5 +1,6 @@
 package ChatTheSpire.control
 
+import ChatTheSpire.GameState
 import ChatTheSpire.command.CardCommand
 import com.megacrit.cardcrawl.actions.GameActionManager
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
@@ -63,10 +64,12 @@ class AutoVoter : AnimationTimer() {
                     start = now
                 }
                 Phase.Pause -> if (elapsed.value > PAUSE_SECONDS.value) {
-                    val shouldTransition = AbstractDungeon.isScreenUp || (
-                        !AbstractDungeon.actionManager.turnHasEnded
-                            && AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER
-                        )
+                    val shouldTransition = GameState.state != GameState.State.UNKNOWN &&
+                        (AbstractDungeon.isScreenUp || (
+                            !AbstractDungeon.actionManager.turnHasEnded
+                                && AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER
+                            )
+                            )
 
                     if (shouldTransition) {
                         logger.info("Transition to Voting")

@@ -15,52 +15,48 @@ import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
 import ChatTheSpire.console.TestConsoleCommand
 import basemod.devcommands.ConsoleCommand
+import org.apache.logging.log4j.LogManager
+
+private val logger = LogManager.getLogger(CommandManager::class.java.name)
 
 data class CommandData(
-    val prefix: String,
     val command: Command,
     val consoleCommandClass: Class<out ConsoleCommand>
 )
 
 val commands = listOf(
     CommandData(
-        prefix = "card",
         command = CardCommand,
         consoleCommandClass = CardConsoleCommand::class.java
     ),
     CommandData(
-        prefix = "usepotion",
         command = PotionUseCommand,
         consoleCommandClass = PotionUseConsoleCommand::class.java
     ),
     CommandData(
-        prefix = "destroypotion",
         command = PotionDestroyCommand,
         consoleCommandClass = PotionDestroyConsoleCommand::class.java
     ),
     CommandData(
-        prefix = "map",
         command = MapCommand,
         consoleCommandClass = MapConsoleCommand::class.java
     ),
     CommandData(
-        prefix = "dialog",
         command = DialogCommand,
         consoleCommandClass = DialogConsoleCommand::class.java
     ),
     CommandData(
-        prefix = "endturn",
         command = EndTurnCommand,
         consoleCommandClass = EndTurnConsoleCommand::class.java
     )
 )
-private val commandsMap = commands.map { it.prefix to it }.toMap()
+private val commandsMap = commands.map { it.command.prefix to it }.toMap()
 
 fun initializeConsoleCommands() {
     ConsoleCommand.addCommand(":test", TestConsoleCommand::class.java)
 
     commands.forEach { data ->
-        ConsoleCommand.addCommand("${data.prefix}", data.consoleCommandClass)
+        ConsoleCommand.addCommand("${data.command.prefix}", data.consoleCommandClass)
     }
 }
 
@@ -68,12 +64,22 @@ object CommandManager {
 
     fun canPerform(stringCommand: String): Boolean {
         val (command, parameters) = extract(stringCommand) ?: return false
-        return command.canPerform(parameters)
+        return if (GameState.canPerform(command.prefix)) {
+            command.canPerform(parameters)
+        } else {
+            logger.info("Cannot perform {} in state {}", command.prefix, GameState.state)
+            false
+        }
     }
 
     fun perform(stringCommand: String): Boolean {
         val (command, parameters) = extract(stringCommand) ?: return false
-        return command.perform(parameters)
+        return if (GameState.canPerform(command.prefix)) {
+            logger.info("Cannot perform {} in state {}", command.prefix, GameState.state)
+            command.perform(parameters)
+        } else {
+            false
+        }
     }
 }
 

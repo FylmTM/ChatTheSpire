@@ -12,6 +12,10 @@ private val logger = LogManager.getLogger(PotionUseCommand::class.java.name)
 
 object PotionUseCommand : Command {
 
+    override val prefix: String = "usepotion"
+
+    override val syntax: String = "usepotion [slot]\nusepotion [slot] [monster]"
+
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size !in 1..2) {
             logger.info("Invalid parameters size: {}", parameters.size)

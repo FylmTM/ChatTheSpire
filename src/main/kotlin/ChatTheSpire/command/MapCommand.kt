@@ -10,6 +10,10 @@ private val logger = LogManager.getLogger(MapCommand::class.java.name)
 
 object MapCommand : Command {
 
+    override val prefix: String = "map"
+
+    override val syntax: String = "map [node]"
+
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size != 1) {
             logger.info("Invalid parameters size: {}", parameters.size)
