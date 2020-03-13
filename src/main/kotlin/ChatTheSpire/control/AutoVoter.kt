@@ -14,9 +14,9 @@ enum class Phase {
     Pause
 }
 
-val VOTING_SECONDS = TimeUnit.NANOSECONDS.convert(15, TimeUnit.SECONDS)
-val VOTING_STOPPED_SECONDS = TimeUnit.NANOSECONDS.convert(1, TimeUnit.SECONDS)
-val PAUSE_SECONDS = TimeUnit.NANOSECONDS.convert(5, TimeUnit.SECONDS)
+val VOTING_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(15, TimeUnit.SECONDS))
+val VOTING_STOPPED_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(1, TimeUnit.SECONDS))
+val PAUSE_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(5, TimeUnit.SECONDS))
 
 private val logger = LogManager.getLogger(CardCommand::class.java.name)
 
@@ -48,19 +48,19 @@ class AutoVoter : AnimationTimer() {
             elapsed.set(now - start)
 
             when (phase.value) {
-                Phase.Voting -> if (elapsed.value > VOTING_SECONDS) {
+                Phase.Voting -> if (elapsed.value > VOTING_SECONDS.value) {
                     logger.info("Transition to VotingStopped")
                     VotingManager.stop()
                     phase.set(Phase.VotingStopped)
                     start = now
                 }
-                Phase.VotingStopped -> if (elapsed.value > VOTING_STOPPED_SECONDS) {
+                Phase.VotingStopped -> if (elapsed.value > VOTING_STOPPED_SECONDS.value) {
                     logger.info("Transition to Pause")
                     VotingManager.perform()
                     phase.set(Phase.Pause)
                     start = now
                 }
-                Phase.Pause -> if (elapsed.value > PAUSE_SECONDS) {
+                Phase.Pause -> if (elapsed.value > PAUSE_SECONDS.value) {
                     logger.info("Transition to Voting")
                     VotingManager.start()
                     phase.set(Phase.Voting)

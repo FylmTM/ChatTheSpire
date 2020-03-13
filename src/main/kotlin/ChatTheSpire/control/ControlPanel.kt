@@ -17,7 +17,7 @@ class ControlPanel : App(ControlView::class)
 
 class ControlView : View() {
 
-    override val root = vbox() {
+    override val root = vbox {
         prefWidth = 250.0
         spacing = 10.0
         vgrow = Priority.ALWAYS
@@ -90,6 +90,12 @@ class VotingView : View() {
                     autoVoter.pause()
                 }
             }
+            textfield(VOTING_SECONDS) {
+                prefWidth = 30.0
+            }
+            textfield(PAUSE_SECONDS) {
+                prefWidth = 30.0
+            }
         }
         borderpane {
             hiddenWhen(autoVoter.active.not())
@@ -118,17 +124,17 @@ class VotingView : View() {
                 hbox {
                     alignment = Pos.CENTER_RIGHT
                     spacing = 5.0
-                    label() {
+                    label {
                         style {
                             fontSize = 20.px
                             fontWeight = FontWeight.BOLD
                         }
                         textProperty().bind(autoVoter.elapsed.stringBinding {
-                            val total = when (autoVoter.phase.value) {
+                            val total = when (autoVoter.phase.value!!) {
                                 Phase.Voting -> VOTING_SECONDS
                                 Phase.VotingStopped -> VOTING_STOPPED_SECONDS
                                 Phase.Pause -> PAUSE_SECONDS
-                            }
+                            }.value
                             (TimeUnit.SECONDS.convert(total - it!!.toLong(), TimeUnit.NANOSECONDS) + 1).toString()
                         })
                     }
@@ -142,10 +148,10 @@ class VotingView : View() {
             minHeight = 50.0
             prefHeight = 50.0
             progressProperty().bind(autoVoter.elapsed.doubleBinding {
-                when (autoVoter.phase.value) {
-                    Phase.Voting -> it!!.toDouble() / VOTING_SECONDS.toDouble()
-                    Phase.VotingStopped -> it!!.toDouble() / VOTING_STOPPED_SECONDS.toDouble()
-                    Phase.Pause -> it!!.toDouble() / PAUSE_SECONDS.toDouble()
+                when (autoVoter.phase.value!!) {
+                    Phase.Voting -> it!!.toDouble() / VOTING_SECONDS.value.toDouble()
+                    Phase.VotingStopped -> it!!.toDouble() / VOTING_STOPPED_SECONDS.value.toDouble()
+                    Phase.Pause -> it!!.toDouble() / PAUSE_SECONDS.value.toDouble()
                 }
             })
             style {
@@ -153,7 +159,7 @@ class VotingView : View() {
             }
         }
         autoVoter.phase.addListener { _, _, new ->
-            when (new) {
+            when (new!!) {
                 Phase.Voting -> bar.style {
                     accentColor = c("#3DCC91")
                 }
