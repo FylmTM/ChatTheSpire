@@ -23,6 +23,7 @@ object VotingManager {
     private val rejectedCache: MutableSet<String> = HashSet()
 
     fun start() {
+        CommandResultsLogController.clear()
         results.clear()
         userCache.clear()
         acceptedCache.clear()

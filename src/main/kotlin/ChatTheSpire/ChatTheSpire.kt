@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer
 import com.megacrit.cardcrawl.core.Settings
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.apache.logging.log4j.LogManager
 
 private val logger = LogManager.getLogger(ChatTheSpire::class.java.name)
@@ -53,6 +54,8 @@ class ChatTheSpire : PostInitializeSubscriber, PostRenderSubscriber {
         if (hintFont == null) {
             return
         }
+
+        GameState.currentScreen = AbstractDungeon.screen
         renderHints(sb, hintFont!!)
     }
 }

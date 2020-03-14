@@ -239,4 +239,8 @@ object CommandResultsLogController : Controller() {
             logEntries.remove(200, logEntries.size)
         }
     }
+
+    fun clear() {
+        logEntries.clear()
+    }
 }

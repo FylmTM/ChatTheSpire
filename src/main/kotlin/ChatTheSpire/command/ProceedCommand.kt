@@ -9,9 +9,9 @@ private val logger = LogManager.getLogger(ProceedCommand::class.java.name)
 
 object ProceedCommand : Command {
 
-    override val prefix: String = "proceed"
+    override val prefix: String = "n"
 
-    override val syntax: String = "proceed - Proceed / Skip"
+    override val syntax: String = "n - Proceed / Skip Rewards / Skip Card"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (SpireInternals.proceedIsHidden) {

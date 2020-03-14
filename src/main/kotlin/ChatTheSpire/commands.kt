@@ -73,7 +73,11 @@ val commands = listOf(
         consoleCommandClass = CardRewardSelectConsoleCommand::class.java
     )
 )
-private val commandsMap = commands.map { it.command.prefix to it }.toMap()
+private val commandsMap = commands.map { it.command.prefix to it }.toMap().also {
+    if (it.size != commands.size) {
+        throw RuntimeException("Check command prefixes, there is duplicate")
+    }
+}
 private val allPrefixes = commands.map { it.command.prefix }
 
 fun initializeConsoleCommands() {

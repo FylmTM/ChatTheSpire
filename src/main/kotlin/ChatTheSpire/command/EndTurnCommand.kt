@@ -10,9 +10,9 @@ private val logger = LogManager.getLogger(EndTurnCommand::class.java.name)
 
 object EndTurnCommand : Command {
 
-    override val prefix: String = "end"
+    override val prefix: String = "e"
 
-    override val syntax: String = "end - end turn"
+    override val syntax: String = "e - end turn"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (!AbstractDungeon.overlayMenu.endTurnButton.enabled) {

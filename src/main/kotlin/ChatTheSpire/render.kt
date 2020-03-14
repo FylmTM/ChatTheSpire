@@ -42,7 +42,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
 
     if (AbstractDungeon.isScreenUp) {
         // Available map nodes
-        when (AbstractDungeon.screen) {
+        when (GameState.currentScreen) {
             AbstractDungeon.CurrentScreen.MAP -> {
                 SafeSpire.nextMapNodes.forEachIndexed { i, node ->
                     font.draw(sb, "${i + 1}", node.hb.x, node.hb.y, node.hb.width, Align.center, false)
@@ -70,6 +70,8 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                         false
                     )
                 }
+            }
+            else -> {
             }
         }
     } else {
@@ -103,15 +105,17 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
 
         // Monsters
         SafeSpire.monsters?.forEachIndexed { i, monster ->
-            font.draw(
-                sb,
-                "${i + 1}",
-                monster.intentHb.x,
-                monster.intentHb.y + monster.intentHb.height + 30.0F * Settings.scale,
-                monster.intentHb.width,
-                Align.center,
-                false
-            )
+            if (!monster.isDead) {
+                font.draw(
+                    sb,
+                    "${i + 1}",
+                    monster.intentHb.x,
+                    monster.intentHb.y + monster.intentHb.height + 30.0F * Settings.scale,
+                    monster.intentHb.width,
+                    Align.center,
+                    false
+                )
+            }
         }
     }
 }

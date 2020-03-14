@@ -1,5 +1,6 @@
 package ChatTheSpire.command
 
+import ChatTheSpire.GameState
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.SpireInternals
@@ -9,12 +10,12 @@ import org.apache.logging.log4j.LogManager
 private val logger = LogManager.getLogger(CombatRewardSelectCommand::class.java.name)
 
 object SkipCommand : Command {
-    override val prefix: String = "skip"
+    override val prefix: String = "s"
 
-    override val syntax: String = "skip - skip current screen"
+    override val syntax: String = "s - skip current screen"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
-        if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.CARD_REWARD) {
+        if (GameState.currentScreen == AbstractDungeon.CurrentScreen.CARD_REWARD) {
             val button = SpireInternals.cardRewardSkipButton
             if (button == null) {
                 logger.info("Card reward skip button is null")

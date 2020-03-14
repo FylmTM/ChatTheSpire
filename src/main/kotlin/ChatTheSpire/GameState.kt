@@ -25,6 +25,8 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom
 
 object GameState {
 
+    var currentScreen: AbstractDungeon.CurrentScreen? = null
+
     enum class State(
         val title: String,
         val defaultCommand: Command?,
@@ -95,7 +97,7 @@ object GameState {
             }
 
             if (AbstractDungeon.isScreenUp) {
-                return when (AbstractDungeon.screen) {
+                return when (currentScreen) {
                     AbstractDungeon.CurrentScreen.MAP -> MAP
                     AbstractDungeon.CurrentScreen.COMBAT_REWARD -> COMBAT_REWARD
                     AbstractDungeon.CurrentScreen.CARD_REWARD -> CARD_REWARD
