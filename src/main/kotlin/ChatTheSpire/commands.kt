@@ -51,6 +51,7 @@ val commands = listOf(
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap()
+private val allPrefixes = commands.map { it.command.prefix }
 
 fun initializeConsoleCommands() {
     ConsoleCommand.addCommand(":test", TestConsoleCommand::class.java)
@@ -85,7 +86,7 @@ object CommandManager {
 
 private val whitespaceRegex = "\\s+".toRegex()
 private val commandWithoutPrefixRegex = "^\\d+(\\s+\\d+)*$".toRegex()
-private val validCommandRegex = "^[a-zA-Z]+(\\s+\\d+)*$".toRegex()
+private val commandRegex = "^(${allPrefixes.joinToString("|")})(\\s+\\d+)*$".toRegex()
 
 fun extract(command: String): Pair<Command, List<Int>>? {
     val gameState = GameState.state
@@ -97,7 +98,7 @@ fun extract(command: String): Pair<Command, List<Int>>? {
         return Pair(gameState.defaultCommand, cleanCommand.split(whitespaceRegex).map(String::toInt))
     }
 
-    if (!cleanCommand.matches(validCommandRegex)) {
+    if (!cleanCommand.matches(commandRegex)) {
         return null
     }
 
@@ -107,4 +108,8 @@ fun extract(command: String): Pair<Command, List<Int>>? {
 
     val data = commandsMap[prefix] ?: return null
     return Pair(data.command, parameters)
+}
+
+fun possiblyCommand(command: String): Boolean {
+    return command.matches(commandWithoutPrefixRegex) || command.matches(commandRegex)
 }

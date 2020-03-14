@@ -41,35 +41,39 @@ object VotingManager {
     }
 
     fun vote(user: String, command: String) {
-        val status = if (open.value) {
-            if (userCache.contains(user)) {
-                CommandResultLogEntryStatus.SKIP
-            } else if (rejectedCache.contains(command)) {
-                CommandResultLogEntryStatus.REJECTED
-            } else if (acceptedCache.contains(command)) {
-                val result = acceptedCache[command]!!
-                result.countProperty.set(result.countProperty.value + 1)
-                userCache.add(user)
-                results.sortByDescending { it.count }
-                CommandResultLogEntryStatus.ACCEPTED
-            } else {
-                val canPerform = CommandManager.canPerform(command)
-                if (canPerform) {
-                    val result = VoteResult(command, 1)
-                    results.add(result)
-                    results.sortByDescending { it.count }
+        synchronized(this) {
+            val status = if (open.value) {
+                if (userCache.contains(user)) {
+                    CommandResultLogEntryStatus.SKIP
+                } else if (rejectedCache.contains(command)) {
+                    CommandResultLogEntryStatus.REJECTED
+                } else if (acceptedCache.contains(command)) {
+                    val result = acceptedCache[command]!!
+                    result.countProperty.set(result.countProperty.value + 1)
                     userCache.add(user)
-                    acceptedCache[command] = result
+                    results.sortByDescending { it.count }
                     CommandResultLogEntryStatus.ACCEPTED
                 } else {
-                    rejectedCache.add(command)
-                    CommandResultLogEntryStatus.REJECTED
+                    val canPerform = CommandManager.canPerform(command)
+                    if (canPerform) {
+                        val result = VoteResult(command, 1)
+                        results.add(result)
+                        results.sortByDescending { it.count }
+                        userCache.add(user)
+                        acceptedCache[command] = result
+                        CommandResultLogEntryStatus.ACCEPTED
+                    } else {
+                        rejectedCache.add(command)
+                        CommandResultLogEntryStatus.REJECTED
+                    }
                 }
+            } else {
+                CommandResultLogEntryStatus.SKIP
             }
-        } else {
-            CommandResultLogEntryStatus.SKIP
-        }
 
-        CommandResultsLogController.add(CommandResultLogEntry(user, command, status))
+            runLater {
+                CommandResultsLogController.add(CommandResultLogEntry(user, command, status))
+            }
+        }
     }
 }

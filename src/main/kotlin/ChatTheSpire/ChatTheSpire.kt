@@ -1,5 +1,6 @@
 package ChatTheSpire
 
+import ChatTheSpire.chat.Discord
 import basemod.BaseMod
 import basemod.interfaces.PostInitializeSubscriber
 import basemod.interfaces.PostRenderSubscriber
@@ -44,6 +45,8 @@ class ChatTheSpire : PostInitializeSubscriber, PostRenderSubscriber {
         initializeSettings()
         initializeConsoleCommands()
         initializeControlPanel()
+
+        Discord.listen()
     }
 
     override fun receivePostRender(sb: SpriteBatch) {

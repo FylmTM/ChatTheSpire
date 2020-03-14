@@ -1,5 +1,6 @@
 package ChatTheSpire.control
 
+import ChatTheSpire.chat.Discord
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -10,6 +11,7 @@ import tornadofx.*
 import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
+    Discord.listen()
     launch<ControlPanel>(args)
 }
 

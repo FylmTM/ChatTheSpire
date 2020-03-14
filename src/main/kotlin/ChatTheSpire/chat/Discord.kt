@@ -1,30 +1,55 @@
 package ChatTheSpire.chat
 
-import net.dv8tion.jda.api.JDA
-import net.dv8tion.jda.api.JDABuilder
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent
-import net.dv8tion.jda.api.hooks.ListenerAdapter
+import ChatTheSpire.control.VotingManager
+import ChatTheSpire.possiblyCommand
+import org.javacord.api.DiscordApi
+import org.javacord.api.DiscordApiBuilder
 
 private const val token = "Njg4MDk3NDUxNzUxNTA1OTIw.Xmvgmw.mdoiLpmE_1Mi82Hrf_GR6IOF5r0"
 
+//object Discord {
+//    private var jda: JDA? = null
+//
+//    fun listen() {
+//        jda = JDABuilder(token)
+//            .addEventListeners(MessageListener)
+//            .build()
+//    }
+//}
+//
+//object MessageListener : ListenerAdapter() {
+//    override fun onMessageReceived(event: MessageReceivedEvent) {
+//        if (event.author.isBot) {
+//            return
+//        }
+//
+//        if (event.channel.name == "chat-the-spire") {
+//            println(event.message)
+//        }
+//    }
+//}
+
 object Discord {
-    private var jda: JDA? = null
+
+    var api: DiscordApi? = null
 
     fun listen() {
-        jda = JDABuilder(token)
-            .addEventListeners(MessageListener)
-            .build()
-    }
-}
+        api = DiscordApiBuilder().setToken(token)
+            .login()
+            .join()
 
-object MessageListener : ListenerAdapter() {
-    override fun onMessageReceived(event: MessageReceivedEvent) {
-        if (event.author.isBot) {
-            return
-        }
-
-        if (event.channel.name == "chat-the-spire") {
-            println(event.message)
+        // Add a listener which answers with "Pong!" if someone writes "!ping"
+        api?.addMessageCreateListener { event ->
+            if (!event.messageAuthor.isBotUser) {
+                event.channel.asServerChannel().ifPresent {
+                    if (it.name == "chat-the-spire") {
+                        val command = event.message.content
+                        if (possiblyCommand(command)) {
+                            VotingManager.vote(event.message.author.displayName, command)
+                        }
+                    }
+                }
+            }
         }
     }
 }

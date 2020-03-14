@@ -42,7 +42,12 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
     } else {
         // Options for room dialog (Neow)
         RoomEventDialog.optionList?.forEachIndexed { i, option ->
-            font.draw(sb, "${i + 1}", option.hb.x, option.hb.y + option.hb.height - 10.0F * Settings.scale)
+            font.draw(
+                sb,
+                "${i + 1}",
+                option.hb.x - 15.0F * Settings.scale,
+                option.hb.y + option.hb.height - 25.0F * Settings.scale
+            )
         }
 
         // Options in event room
