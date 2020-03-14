@@ -3,9 +3,11 @@ package ChatTheSpire.util
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.helpers.Hitbox
 import com.megacrit.cardcrawl.map.MapRoomNode
+import com.megacrit.cardcrawl.screens.CardRewardScreen
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton
+import com.megacrit.cardcrawl.ui.buttons.SkipCardButton
 import com.megacrit.cardcrawl.ui.panels.PotionPopUp
 
 fun <T> Class<T>.getAsPublicField(name: String) =
@@ -25,6 +27,10 @@ object SpireInternals {
         .getAsPublicField("hb")
     private val proceedIsHiddenField = ProceedButton::class.java
         .getAsPublicField("isHidden")
+    private val cardRewardSkipButtonField = CardRewardScreen::class.java
+        .getAsPublicField("skipButton")
+    private val skipCardButtonIsHiddenField = SkipCardButton::class.java
+        .getAsPublicField("isHidden")
     private val visibleMapNodesField = DungeonMapScreen::class.java
         .getAsPublicField("visibleMapNodes")
 
@@ -42,6 +48,13 @@ object SpireInternals {
 
     val proceedIsHidden: Boolean
         get() = proceedIsHiddenField.getBoolean(AbstractDungeon.overlayMenu.proceedButton)
+
+    val cardRewardSkipButton: SkipCardButton?
+        get() = cardRewardSkipButtonField.get(AbstractDungeon.cardRewardScreen) as SkipCardButton
+
+    fun skipButtonIsHidden(button: SkipCardButton): Boolean {
+        return skipCardButtonIsHiddenField.getBoolean(button)
+    }
 
     @Suppress("UNCHECKED_CAST")
     val visibleMapNodes: ArrayList<MapRoomNode>

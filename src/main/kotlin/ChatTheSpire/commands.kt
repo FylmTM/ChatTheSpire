@@ -1,7 +1,8 @@
 package ChatTheSpire
 
 import ChatTheSpire.command.CardCommand
-import ChatTheSpire.command.CombatRewardSelect
+import ChatTheSpire.command.CardRewardSelectCommand
+import ChatTheSpire.command.CombatRewardSelectCommand
 import ChatTheSpire.command.Command
 import ChatTheSpire.command.DialogCommand
 import ChatTheSpire.command.EndTurnCommand
@@ -9,7 +10,9 @@ import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
+import ChatTheSpire.command.SkipCommand
 import ChatTheSpire.console.CardConsoleCommand
+import ChatTheSpire.console.CardRewardSelectConsoleCommand
 import ChatTheSpire.console.CombatRewardSelectConsoleCommand
 import ChatTheSpire.console.DialogConsoleCommand
 import ChatTheSpire.console.EndTurnConsoleCommand
@@ -17,6 +20,7 @@ import ChatTheSpire.console.MapConsoleCommand
 import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
 import ChatTheSpire.console.ProceedConsoleCommand
+import ChatTheSpire.console.SkipConsoleCommand
 import basemod.devcommands.ConsoleCommand
 import org.apache.logging.log4j.LogManager
 
@@ -57,8 +61,16 @@ val commands = listOf(
         consoleCommandClass = ProceedConsoleCommand::class.java
     ),
     CommandData(
-        command = CombatRewardSelect,
+        command = SkipCommand,
+        consoleCommandClass = SkipConsoleCommand::class.java
+    ),
+    CommandData(
+        command = CombatRewardSelectCommand,
         consoleCommandClass = CombatRewardSelectConsoleCommand::class.java
+    ),
+    CommandData(
+        command = CardRewardSelectCommand,
+        consoleCommandClass = CardRewardSelectConsoleCommand::class.java
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap()
