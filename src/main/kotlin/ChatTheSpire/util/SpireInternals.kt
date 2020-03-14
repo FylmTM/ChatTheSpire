@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.helpers.Hitbox
 import com.megacrit.cardcrawl.map.MapRoomNode
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
+import com.megacrit.cardcrawl.ui.buttons.ProceedButton
 import com.megacrit.cardcrawl.ui.panels.PotionPopUp
 
 fun <T> Class<T>.getAsPublicField(name: String) =
@@ -14,23 +15,33 @@ fun <T> Class<T>.getAsPublicField(name: String) =
 
 object SpireInternals {
 
-    private val potionUseField = PotionPopUp::class.java
+    private val potionUseHitboxField = PotionPopUp::class.java
         .getAsPublicField("hbTop")
-    private val potionDestroyField = PotionPopUp::class.java
+    private val potionDestroyHitboxField = PotionPopUp::class.java
         .getAsPublicField("hbBot")
-    private val endTurnField = EndTurnButton::class.java
+    private val endTurnHitboxField = EndTurnButton::class.java
         .getAsPublicField("hb")
+    private val proceedHitboxField = ProceedButton::class.java
+        .getAsPublicField("hb")
+    private val proceedIsHiddenField = ProceedButton::class.java
+        .getAsPublicField("isHidden")
     private val visibleMapNodesField = DungeonMapScreen::class.java
         .getAsPublicField("visibleMapNodes")
 
     val potionUseHitbox: Hitbox?
-        get() = potionUseField.get(AbstractDungeon.topPanel.potionUi) as Hitbox
+        get() = potionUseHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox
 
     val potionDestroyHitbox: Hitbox?
-        get() = potionDestroyField.get(AbstractDungeon.topPanel.potionUi) as Hitbox
+        get() = potionDestroyHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox
 
     val endTurnHitbox: Hitbox?
-        get() = endTurnField.get(AbstractDungeon.overlayMenu.endTurnButton) as Hitbox
+        get() = endTurnHitboxField.get(AbstractDungeon.overlayMenu.endTurnButton) as Hitbox
+
+    val proceedHitbox: Hitbox?
+        get() = proceedHitboxField.get(AbstractDungeon.overlayMenu.proceedButton) as Hitbox
+
+    val proceedIsHidden: Boolean
+        get() = proceedIsHiddenField.getBoolean(AbstractDungeon.overlayMenu.proceedButton)
 
     @Suppress("UNCHECKED_CAST")
     val visibleMapNodes: ArrayList<MapRoomNode>

@@ -1,17 +1,20 @@
 package ChatTheSpire
 
 import ChatTheSpire.GameState.State.COMBAT
+import ChatTheSpire.GameState.State.COMBAT_REWARD
 import ChatTheSpire.GameState.State.DIALOG
 import ChatTheSpire.GameState.State.MAP
 import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
 import ChatTheSpire.GameState.State.UNKNOWN
 import ChatTheSpire.command.CardCommand
+import ChatTheSpire.command.CombatRewardSelect
 import ChatTheSpire.command.Command
 import ChatTheSpire.command.DialogCommand
 import ChatTheSpire.command.EndTurnCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
+import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.util.SafeSpire
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
@@ -52,6 +55,15 @@ object GameState {
                 EndTurnCommand
             )
         ),
+        COMBAT_REWARD(
+            title = "Combat Reward",
+            defaultCommand = CombatRewardSelect,
+            commands = listOf(
+                CombatRewardSelect,
+                ProceedCommand,
+                PotionDestroyCommand
+            )
+        ),
         MAP(
             title = "Map",
             defaultCommand = MapCommand,
@@ -75,6 +87,7 @@ object GameState {
             if (AbstractDungeon.isScreenUp) {
                 return when (AbstractDungeon.screen) {
                     AbstractDungeon.CurrentScreen.MAP -> MAP
+                    AbstractDungeon.CurrentScreen.COMBAT_REWARD -> COMBAT_REWARD
                     else -> UNKNOWN
                 }
             }

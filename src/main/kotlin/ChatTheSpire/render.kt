@@ -27,17 +27,48 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
     if (AbstractDungeon.topPanel?.potionUi?.isHidden != false) {
         SafeSpire.potions?.forEachIndexed { i, potion ->
             if (potion !is PotionSlot) {
-                font.draw(sb, "${i + 1}", potion.hb.x, potion.hb.y, potion.hb.width, Align.center, false)
+                font.draw(
+                    sb,
+                    "${i + 1}",
+                    potion.hb.x,
+                    potion.hb.y - 5.0F * Settings.scale,
+                    potion.hb.width,
+                    Align.center,
+                    false
+                )
             }
         }
     }
 
     if (AbstractDungeon.isScreenUp) {
         // Available map nodes
-        when(AbstractDungeon.screen) {
+        when (AbstractDungeon.screen) {
             AbstractDungeon.CurrentScreen.MAP -> {
                 SafeSpire.nextMapNodes.forEachIndexed { i, node ->
                     font.draw(sb, "${i + 1}", node.hb.x, node.hb.y, node.hb.width, Align.center, false)
+                }
+            }
+            AbstractDungeon.CurrentScreen.COMBAT_REWARD -> {
+                AbstractDungeon.combatRewardScreen?.rewards?.forEachIndexed { i, reward ->
+                    font.draw(
+                        sb,
+                        "${i + 1}",
+                        reward.hb.x - 15.0F * Settings.scale,
+                        reward.hb.y + reward.hb.height - 35.0F * Settings.scale
+                    )
+                }
+            }
+            AbstractDungeon.CurrentScreen.CARD_REWARD -> {
+                AbstractDungeon.cardRewardScreen?.rewardGroup?.forEachIndexed { i, card ->
+                    font.draw(
+                        sb,
+                        "${i + 1}",
+                        card.hb.x,
+                        card.hb.y - 10.0F * Settings.scale,
+                        card.hb.width,
+                        Align.center,
+                        false
+                    )
                 }
             }
         }

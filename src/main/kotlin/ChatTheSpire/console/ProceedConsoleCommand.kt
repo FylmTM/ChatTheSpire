@@ -1,10 +1,10 @@
 package ChatTheSpire.console
 
-import ChatTheSpire.command.EndTurnCommand
+import ChatTheSpire.command.ProceedCommand
 import basemod.DevConsole
 import basemod.devcommands.ConsoleCommand
 
-class EndTurnConsoleCommand : ConsoleCommand() {
+class ProceedConsoleCommand : ConsoleCommand() {
 
     init {
         minExtraTokens = 0
@@ -12,8 +12,8 @@ class EndTurnConsoleCommand : ConsoleCommand() {
     }
 
     override fun execute(tokens: Array<String>, depth: Int) {
-        if (!EndTurnCommand.perform(listOf())) {
-            DevConsole.log("Failed to end turn")
+        if (!ProceedCommand.perform(listOf())) {
+            DevConsole.log("Failed to proceed")
         }
     }
 

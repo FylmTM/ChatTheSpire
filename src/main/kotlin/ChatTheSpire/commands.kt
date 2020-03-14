@@ -1,19 +1,22 @@
 package ChatTheSpire
 
 import ChatTheSpire.command.CardCommand
+import ChatTheSpire.command.CombatRewardSelect
 import ChatTheSpire.command.Command
 import ChatTheSpire.command.DialogCommand
 import ChatTheSpire.command.EndTurnCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
+import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.console.CardConsoleCommand
+import ChatTheSpire.console.CombatRewardSelectConsoleCommand
 import ChatTheSpire.console.DialogConsoleCommand
 import ChatTheSpire.console.EndTurnConsoleCommand
 import ChatTheSpire.console.MapConsoleCommand
 import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
-import ChatTheSpire.console.TestConsoleCommand
+import ChatTheSpire.console.ProceedConsoleCommand
 import basemod.devcommands.ConsoleCommand
 import org.apache.logging.log4j.LogManager
 
@@ -48,16 +51,22 @@ val commands = listOf(
     CommandData(
         command = EndTurnCommand,
         consoleCommandClass = EndTurnConsoleCommand::class.java
+    ),
+    CommandData(
+        command = ProceedCommand,
+        consoleCommandClass = ProceedConsoleCommand::class.java
+    ),
+    CommandData(
+        command = CombatRewardSelect,
+        consoleCommandClass = CombatRewardSelectConsoleCommand::class.java
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap()
 private val allPrefixes = commands.map { it.command.prefix }
 
 fun initializeConsoleCommands() {
-    ConsoleCommand.addCommand(":test", TestConsoleCommand::class.java)
-
     commands.forEach { data ->
-        ConsoleCommand.addCommand("${data.command.prefix}", data.consoleCommandClass)
+        ConsoleCommand.addCommand(data.command.prefix, data.consoleCommandClass)
     }
 }
 

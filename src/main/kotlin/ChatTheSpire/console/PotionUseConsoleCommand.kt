@@ -41,6 +41,5 @@ class PotionUseConsoleCommand : ConsoleCommand() {
 
     override fun errorMsg() {
         DevConsole.couldNotParse()
-        DevConsole.log("syntax: :potionuse [potion-position] {monster-position}")
     }
 }

@@ -35,6 +35,5 @@ class PotionDestroyConsoleCommand : ConsoleCommand() {
 
     override fun errorMsg() {
         DevConsole.couldNotParse()
-        DevConsole.log("syntax: :potiondestroy [potion-position] {monster-position}")
     }
 }

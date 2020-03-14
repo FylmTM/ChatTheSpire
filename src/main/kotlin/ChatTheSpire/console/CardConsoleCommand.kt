@@ -41,6 +41,5 @@ class CardConsoleCommand : ConsoleCommand() {
 
     override fun errorMsg() {
         DevConsole.couldNotParse()
-        DevConsole.log("syntax: :card [card-position] {monster-position}")
     }
 }

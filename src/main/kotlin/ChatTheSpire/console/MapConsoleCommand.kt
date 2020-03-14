@@ -37,6 +37,5 @@ class MapConsoleCommand : ConsoleCommand() {
 
     override fun errorMsg() {
         DevConsole.couldNotParse()
-        DevConsole.log("syntax: :dialog [option-position]")
     }
 }
