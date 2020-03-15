@@ -23,7 +23,7 @@ import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.command.RestRoomOptionSelectCommand
-import ChatTheSpire.command.SkipCommand
+import ChatTheSpire.command.CardRewardSkipCommand
 import ChatTheSpire.util.SafeSpire
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
@@ -65,7 +65,8 @@ object GameState {
             title = "Rest",
             defaultCommand = RestRoomOptionSelectCommand,
             commands = listOf(
-                RestRoomOptionSelectCommand
+                RestRoomOptionSelectCommand,
+                ProceedCommand
             ),
             votingSecondsScale = 1.0F
         ),
@@ -100,7 +101,7 @@ object GameState {
             defaultCommand = CardRewardSelectCommand,
             commands = listOf(
                 CardRewardSelectCommand,
-                SkipCommand,
+                CardRewardSkipCommand,
                 DeckCommand
             ),
             votingSecondsScale = 2.0F

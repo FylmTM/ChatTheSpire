@@ -2,6 +2,7 @@ package ChatTheSpire.command
 
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
+import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.SpireInternals
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.apache.logging.log4j.LogManager
@@ -17,6 +18,11 @@ object ExhaustPileCommand : Command {
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (AbstractDungeon.overlayMenu.exhaustPanel.isHidden) {
             logger.info("Exhausted pile panel is hidden")
+            return false
+        }
+
+        if (AbstractDungeon.player.exhaustPile.isEmpty) {
+            logger.info("Exhaust pile is empty")
             return false
         }
 

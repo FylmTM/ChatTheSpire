@@ -15,7 +15,7 @@ import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.command.RestRoomOptionSelectCommand
-import ChatTheSpire.command.SkipCommand
+import ChatTheSpire.command.CardRewardSkipCommand
 import ChatTheSpire.console.CardConsoleCommand
 import ChatTheSpire.console.CardRewardSelectConsoleCommand
 import ChatTheSpire.console.CombatRewardSelectConsoleCommand
@@ -30,7 +30,7 @@ import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
 import ChatTheSpire.console.ProceedConsoleCommand
 import ChatTheSpire.console.RestRoomOptionSelectConsoleCommand
-import ChatTheSpire.console.SkipConsoleCommand
+import ChatTheSpire.console.CardRewardSkipConsoleCommand
 import basemod.devcommands.ConsoleCommand
 import org.apache.logging.log4j.LogManager
 
@@ -71,8 +71,8 @@ val commands = listOf(
         consoleCommandClass = ProceedConsoleCommand::class.java
     ),
     CommandData(
-        command = SkipCommand,
-        consoleCommandClass = SkipConsoleCommand::class.java
+        command = CardRewardSkipCommand,
+        consoleCommandClass = CardRewardSkipConsoleCommand::class.java
     ),
     CommandData(
         command = CombatRewardSelectCommand,

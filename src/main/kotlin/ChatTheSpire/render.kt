@@ -59,6 +59,22 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
         )
     }
 
+    // Overlay proceed
+    if (!SpireInternals.proceedIsHidden) {
+        SpireInternals.proceedHitbox?.let {
+            font.draw(
+                sb,
+                "N",
+                it.x,
+                it.y,
+                it.width,
+                Align.center,
+                false
+            )
+        }
+        SpireInternals.proceedHitbox
+    }
+
     if (AbstractDungeon.isScreenUp) {
         // Available map nodes
         when (GameState.currentScreen) {
@@ -106,21 +122,6 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
             }
             else -> {
             }
-        }
-
-        if (!SpireInternals.proceedIsHidden) {
-            SpireInternals.proceedHitbox?.let {
-                font.draw(
-                    sb,
-                    "N",
-                    it.x,
-                    it.y,
-                    it.width,
-                    Align.center,
-                    false
-                )
-            }
-            SpireInternals.proceedHitbox
         }
     } else {
         // Options for room dialog (Neow)
@@ -236,13 +237,29 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
 
             val room = SafeSpire.room
             if (room is RestRoom) {
-                SpireInternals.restRoomButtons(room.campfireUI).forEachIndexed { i, it ->
-                    font.draw(
-                        sb,
-                        "${i + 1}",
-                        it.hb.x + it.hb.width - 40.0F * Settings.scale,
-                        it.hb.y + it.hb.height - 25.0F * Settings.scale
-                    )
+                if (!room.campfireUI.somethingSelected) {
+                    SpireInternals.restRoomButtons(room.campfireUI).forEachIndexed { i, it ->
+                        font.draw(
+                            sb,
+                            "${i + 1}",
+                            it.hb.x + it.hb.width - 40.0F * Settings.scale,
+                            it.hb.y + it.hb.height - 25.0F * Settings.scale
+                        )
+                    }
+                }
+
+                if (!SpireInternals.confirmButtonIsHidden(room.campfireUI.confirmButton)) {
+                    room.campfireUI.confirmButton.hb.let {
+                        font.draw(
+                            sb,
+                            "N",
+                            it.x,
+                            it.y,
+                            it.width,
+                            Align.center,
+                            false
+                        )
+                    }
                 }
             }
         }

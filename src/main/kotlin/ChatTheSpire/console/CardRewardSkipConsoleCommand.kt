@@ -1,10 +1,10 @@
 package ChatTheSpire.console
 
-import ChatTheSpire.command.SkipCommand
+import ChatTheSpire.command.CardRewardSkipCommand
 import basemod.DevConsole
 import basemod.devcommands.ConsoleCommand
 
-class SkipConsoleCommand : ConsoleCommand() {
+class CardRewardSkipConsoleCommand : ConsoleCommand() {
 
     init {
         minExtraTokens = 0
@@ -12,8 +12,8 @@ class SkipConsoleCommand : ConsoleCommand() {
     }
 
     override fun execute(tokens: Array<String>, depth: Int) {
-        if (!SkipCommand.perform(listOf())) {
-            DevConsole.log("Failed to skip")
+        if (!CardRewardSkipCommand.perform(listOf())) {
+            DevConsole.log("Failed to skip card reward")
         }
     }
 

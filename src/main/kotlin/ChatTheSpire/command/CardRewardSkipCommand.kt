@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager
 
 private val logger = LogManager.getLogger(CombatRewardSelectCommand::class.java.name)
 
-object SkipCommand : Command {
+object CardRewardSkipCommand : Command {
     override val prefix: String = "k"
 
     override val syntax: String = "k - skip current screen"

@@ -30,6 +30,11 @@ object RestRoomOptionSelectCommand : Command {
             return false
         }
 
+        if (room.campfireUI.somethingSelected) {
+            logger.info("Something is already selected")
+            return false
+        }
+
         val restRoomOptionPosition = parameters[0]
 
         val options = SpireInternals.restRoomButtons(room.campfireUI)
