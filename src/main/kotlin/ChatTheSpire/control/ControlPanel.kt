@@ -137,7 +137,12 @@ class VotingView : View() {
                                 Phase.VotingStopped -> VOTING_STOPPED_SECONDS
                                 Phase.Pause -> PAUSE_SECONDS
                             }.value
-                            (TimeUnit.SECONDS.convert(total - it!!.toLong(), TimeUnit.NANOSECONDS) + 1).toString()
+                            val left = (TimeUnit.SECONDS.convert(total - it!!.toLong(), TimeUnit.NANOSECONDS) + 1)
+                            if (left > 0) {
+                                left.toString()
+                            } else {
+                                "∞"
+                            }
                         })
                     }
                 }
@@ -175,11 +180,14 @@ class VotingView : View() {
         }
         tableview(VotingManager.results) {
             minHeight = 150.0
-            prefHeight = 150.0
-            column("Command", VoteResult::commandProperty) {
-                prefWidth = 170.0
+            prefHeight = 200.0
+            style {
+                fontSize = 20.px
             }
-            column("Count", VoteResult::countProperty) {
+            column("Command", VoteResult::commandProperty) {
+                prefWidth = 160.0
+            }
+            column("Votes", VoteResult::countProperty) {
                 prefWidth = 70.0
             }
         }

@@ -1,6 +1,7 @@
 package ChatTheSpire
 
 import ChatTheSpire.util.SafeSpire
+import ChatTheSpire.util.SpireInternals
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -12,6 +13,10 @@ import com.megacrit.cardcrawl.helpers.FontHelper
 import com.megacrit.cardcrawl.potions.PotionSlot
 
 fun renderHints(sb: SpriteBatch, font: BitmapFont) {
+    if (!AbstractDungeon.isPlayerInDungeon()) {
+        return
+    }
+
     // State
     val gameState = GameState.state
     FontHelper.renderFont(
@@ -70,9 +75,38 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                         false
                     )
                 }
+
+                SpireInternals.cardRewardSkipButton?.let {
+                    if (!SpireInternals.skipButtonIsHidden(it)) {
+                        font.draw(
+                            sb,
+                            "s",
+                            it.hb.x,
+                            it.hb.y,
+                            it.hb.width,
+                            Align.center,
+                            false
+                        )
+                    }
+                }
             }
             else -> {
             }
+        }
+
+        if (!SpireInternals.proceedIsHidden) {
+            SpireInternals.proceedHitbox?.let {
+                font.draw(
+                    sb,
+                    "n",
+                    it.x,
+                    it.y,
+                    it.width,
+                    Align.center,
+                    false
+                )
+            }
+            SpireInternals.proceedHitbox
         }
     } else {
         // Options for room dialog (Neow)
@@ -87,19 +121,33 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
 
         // Options in event room
         SafeSpire.room?.event?.imageEventText?.optionList?.forEachIndexed { i, option ->
-            font.draw(sb, "${i + 1}", option.hb.x, option.hb.y + option.hb.height - 10.0F * Settings.scale)
+            font.draw(
+                sb,
+                "${i + 1}",
+                option.hb.x - 15.0F * Settings.scale,
+                option.hb.y + option.hb.height - 25.0F * Settings.scale
+            )
         }
 
         // Hand
         if (SafeSpire.hand != null) {
             val size = SafeSpire.hand!!.size
             SafeSpire.hand!!.forEachIndexed { i, card ->
-                font.draw(
-                    sb,
-                    "${i + 1}",
-                    card.hb.x + card.hb.width * ((i).toFloat() / size),
-                    card.hb.y + card.hb.height + 30.0F + Settings.scale
-                )
+                if (i == 9) {
+                    font.draw(
+                        sb,
+                        "0",
+                        card.hb.x + card.hb.width * ((i).toFloat() / size),
+                        card.hb.y + card.hb.height + 30.0F + Settings.scale
+                    )
+                } else {
+                    font.draw(
+                        sb,
+                        "${i + 1}",
+                        card.hb.x + card.hb.width * ((i).toFloat() / size),
+                        card.hb.y + card.hb.height + 30.0F + Settings.scale
+                    )
+                }
             }
         }
 
@@ -116,6 +164,18 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                     false
                 )
             }
+        }
+
+        SpireInternals.endTurnHitbox?.let {
+            font.draw(
+                sb,
+                "e",
+                it.x,
+                it.y + it.height + 20 * Settings.scale,
+                it.width,
+                Align.center,
+                false
+            )
         }
     }
 }

@@ -41,10 +41,10 @@ object SpireInternals {
         get() = potionDestroyHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox
 
     val endTurnHitbox: Hitbox?
-        get() = endTurnHitboxField.get(AbstractDungeon.overlayMenu.endTurnButton) as Hitbox
+        get() = endTurnHitboxField.get(AbstractDungeon.overlayMenu?.endTurnButton) as Hitbox?
 
     val proceedHitbox: Hitbox?
-        get() = proceedHitboxField.get(AbstractDungeon.overlayMenu.proceedButton) as Hitbox
+        get() = proceedHitboxField.get(AbstractDungeon.overlayMenu?.proceedButton) as Hitbox
 
     val proceedIsHidden: Boolean
         get() = proceedIsHiddenField.getBoolean(AbstractDungeon.overlayMenu.proceedButton)

@@ -25,7 +25,8 @@ object CardCommand : Command {
         val cardPosition = parameters[0]
         val monsterPosition = parameters.getOrNull(1)
 
-        val card = SafeSpire.hand?.getByPosition(cardPosition)
+        val trueCardPosition = if (cardPosition == 0) 10 else cardPosition
+        val card = SafeSpire.hand?.getByPosition(trueCardPosition)
         if (card == null) {
             logger.info("Invalid card position: {}", cardPosition)
             return false
@@ -48,6 +49,8 @@ object CardCommand : Command {
 
         if (doAction) {
             Job.execute {
+                Automation.rest()
+                Automation.click()
                 Automation.keyPress(
                     when (cardPosition) {
                         1 -> KeyEvent.VK_1
@@ -59,8 +62,8 @@ object CardCommand : Command {
                         7 -> KeyEvent.VK_7
                         8 -> KeyEvent.VK_8
                         9 -> KeyEvent.VK_9
-                        10 -> KeyEvent.VK_0
-                        else -> KeyEvent.VK_1
+                        0 -> KeyEvent.VK_0
+                        else -> throw RuntimeException("Why is there more than 10 cards?")
                     }
                 )
                 (monster?.hb ?: SafeSpire.player?.hb)
