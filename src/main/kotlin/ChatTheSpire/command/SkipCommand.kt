@@ -10,9 +10,9 @@ import org.apache.logging.log4j.LogManager
 private val logger = LogManager.getLogger(CombatRewardSelectCommand::class.java.name)
 
 object SkipCommand : Command {
-    override val prefix: String = "s"
+    override val prefix: String = "k"
 
-    override val syntax: String = "s - skip current screen"
+    override val syntax: String = "k - skip current screen"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (GameState.currentScreen == AbstractDungeon.CurrentScreen.CARD_REWARD) {

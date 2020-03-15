@@ -45,6 +45,19 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
         }
     }
 
+    // Deck button
+    if (!SpireInternals.deckButtonDisabled) {
+        font.draw(
+            sb,
+            "D",
+            AbstractDungeon.topPanel.deckHb.x,
+            AbstractDungeon.topPanel.deckHb.y - 5.0F * Settings.scale,
+            AbstractDungeon.topPanel.deckHb.width,
+            Align.center,
+            false
+        )
+    }
+
     if (AbstractDungeon.isScreenUp) {
         // Available map nodes
         when (GameState.currentScreen) {
@@ -80,7 +93,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                     if (!SpireInternals.skipButtonIsHidden(it)) {
                         font.draw(
                             sb,
-                            "s",
+                            "K",
                             it.hb.x,
                             it.hb.y,
                             it.hb.width,
@@ -98,7 +111,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
             SpireInternals.proceedHitbox?.let {
                 font.draw(
                     sb,
-                    "n",
+                    "N",
                     it.x,
                     it.y,
                     it.width,
@@ -166,16 +179,59 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
             }
         }
 
+        // End turn button
         SpireInternals.endTurnHitbox?.let {
             font.draw(
                 sb,
-                "e",
+                "E",
                 it.x,
                 it.y + it.height + 20 * Settings.scale,
                 it.width,
                 Align.center,
                 false
             )
+        }
+
+        // Combat panels
+        if (AbstractDungeon.overlayMenu.combatPanelsShown) {
+            // Draw pile
+            if (!AbstractDungeon.overlayMenu.combatDeckPanel.isHidden) {
+                SpireInternals.drawPilePanelHitbox?.let {
+                    font.draw(
+                        sb,
+                        "A",
+                        it.x,
+                        it.y + it.height + 30 * Settings.scale,
+                        it.width,
+                        Align.center,
+                        false
+                    )
+                }
+            }
+
+            // Discard pile
+            if (!AbstractDungeon.overlayMenu.discardPilePanel.isHidden) {
+                SpireInternals.discardPilePanelHitbox?.let {
+                    font.draw(
+                        sb,
+                        "S",
+                        it.x - 20.0F * Settings.scale,
+                        it.y + it.height - 21.0F * Settings.scale
+                    )
+                }
+            }
+
+            // Exhaust pile
+            if (!AbstractDungeon.overlayMenu.exhaustPanel.isHidden && !AbstractDungeon.player.exhaustPile.isEmpty) {
+                SpireInternals.exhaustPilePanelHitbox?.let {
+                    font.draw(
+                        sb,
+                        "X",
+                        it.x - 20.0F * Settings.scale,
+                        it.y + it.height - 35.0F * Settings.scale
+                    )
+                }
+            }
         }
     }
 }

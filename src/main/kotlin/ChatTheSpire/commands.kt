@@ -4,8 +4,12 @@ import ChatTheSpire.command.CardCommand
 import ChatTheSpire.command.CardRewardSelectCommand
 import ChatTheSpire.command.CombatRewardSelectCommand
 import ChatTheSpire.command.Command
+import ChatTheSpire.command.DeckCommand
 import ChatTheSpire.command.DialogCommand
+import ChatTheSpire.command.DiscardPileCommand
+import ChatTheSpire.command.DrawPileCommand
 import ChatTheSpire.command.EndTurnCommand
+import ChatTheSpire.command.ExhaustPileCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
@@ -14,8 +18,12 @@ import ChatTheSpire.command.SkipCommand
 import ChatTheSpire.console.CardConsoleCommand
 import ChatTheSpire.console.CardRewardSelectConsoleCommand
 import ChatTheSpire.console.CombatRewardSelectConsoleCommand
+import ChatTheSpire.console.DeckConsoleCommand
 import ChatTheSpire.console.DialogConsoleCommand
+import ChatTheSpire.console.DiscardPileConsoleCommand
+import ChatTheSpire.console.DrawPileConsoleCommand
 import ChatTheSpire.console.EndTurnConsoleCommand
+import ChatTheSpire.console.ExhaustPileConsoleCommand
 import ChatTheSpire.console.MapConsoleCommand
 import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
@@ -71,6 +79,22 @@ val commands = listOf(
     CommandData(
         command = CardRewardSelectCommand,
         consoleCommandClass = CardRewardSelectConsoleCommand::class.java
+    ),
+    CommandData(
+        command = DeckCommand,
+        consoleCommandClass = DeckConsoleCommand::class.java
+    ),
+    CommandData(
+        command = DiscardPileCommand,
+        consoleCommandClass = DiscardPileConsoleCommand::class.java
+    ),
+    CommandData(
+        command = DrawPileCommand,
+        consoleCommandClass = DrawPileConsoleCommand::class.java
+    ),
+    CommandData(
+        command = ExhaustPileCommand,
+        consoleCommandClass = ExhaustPileConsoleCommand::class.java
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap().also {

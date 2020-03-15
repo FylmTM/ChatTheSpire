@@ -11,8 +11,12 @@ import ChatTheSpire.command.CardCommand
 import ChatTheSpire.command.CardRewardSelectCommand
 import ChatTheSpire.command.CombatRewardSelectCommand
 import ChatTheSpire.command.Command
+import ChatTheSpire.command.DeckCommand
 import ChatTheSpire.command.DialogCommand
+import ChatTheSpire.command.DiscardPileCommand
+import ChatTheSpire.command.DrawPileCommand
 import ChatTheSpire.command.EndTurnCommand
+import ChatTheSpire.command.ExhaustPileCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
@@ -61,7 +65,11 @@ object GameState {
                 CardCommand,
                 PotionUseCommand,
                 PotionDestroyCommand,
-                EndTurnCommand
+                EndTurnCommand,
+                DeckCommand,
+                DrawPileCommand,
+                DiscardPileCommand,
+                ExhaustPileCommand
             ),
             votingSecondsScale = 1.0F
         ),
@@ -71,7 +79,8 @@ object GameState {
             commands = listOf(
                 CombatRewardSelectCommand,
                 ProceedCommand,
-                PotionDestroyCommand
+                PotionDestroyCommand,
+                DeckCommand
             ),
             votingSecondsScale = 1.0F
         ),
@@ -80,7 +89,8 @@ object GameState {
             defaultCommand = CardRewardSelectCommand,
             commands = listOf(
                 CardRewardSelectCommand,
-                SkipCommand
+                SkipCommand,
+                DeckCommand
             ),
             votingSecondsScale = 2.0F
         ),
