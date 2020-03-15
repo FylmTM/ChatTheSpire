@@ -4,6 +4,7 @@ import ChatTheSpire.GameState.State.CARD_REWARD
 import ChatTheSpire.GameState.State.COMBAT
 import ChatTheSpire.GameState.State.COMBAT_REWARD
 import ChatTheSpire.GameState.State.DIALOG
+import ChatTheSpire.GameState.State.GRID
 import ChatTheSpire.GameState.State.MAP
 import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
 import ChatTheSpire.GameState.State.REST
@@ -114,6 +115,14 @@ object GameState {
                 CancelCommand
             ),
             votingSecondsScale = 1.5F
+        ),
+        GRID(
+            title = "Grid",
+            defaultCommand = null,
+            commands = listOf(
+                CancelCommand
+            ),
+            votingSecondsScale = 2.0F
         );
 
         val prefixes = commands.map(Command::prefix).toHashSet()
@@ -132,6 +141,7 @@ object GameState {
                     AbstractDungeon.CurrentScreen.MAP -> MAP
                     AbstractDungeon.CurrentScreen.COMBAT_REWARD -> COMBAT_REWARD
                     AbstractDungeon.CurrentScreen.CARD_REWARD -> CARD_REWARD
+                    AbstractDungeon.CurrentScreen.GRID -> GRID
                     else -> UNKNOWN
                 }
             }

@@ -97,7 +97,6 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
     }
 
     if (AbstractDungeon.isScreenUp) {
-        // Available map nodes
         when (GameState.currentScreen) {
             AbstractDungeon.CurrentScreen.MAP -> {
                 SafeSpire.nextMapNodes.forEachIndexed { i, node ->
@@ -139,6 +138,19 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                             false
                         )
                     }
+                }
+            }
+            AbstractDungeon.CurrentScreen.GRID -> {
+                AbstractDungeon.gridSelectScreen?.targetGroup?.group?.forEachIndexed { i, card ->
+                    font.draw(
+                        sb,
+                        "${i + 1}",
+                        card.hb.x,
+                        card.hb.y + 25.0F * Settings.scale,
+                        card.hb.width,
+                        Align.center,
+                        false
+                    )
                 }
             }
             else -> {
