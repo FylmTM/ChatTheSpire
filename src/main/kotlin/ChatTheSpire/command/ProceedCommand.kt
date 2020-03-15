@@ -1,9 +1,11 @@
 package ChatTheSpire.command
 
+import ChatTheSpire.GameState
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.SpireInternals
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.helpers.Hitbox
 import com.megacrit.cardcrawl.rooms.RestRoom
 import org.apache.logging.log4j.LogManager
@@ -17,7 +19,9 @@ object ProceedCommand : Command {
     override val syntax: String = "n - Next/Proceed/Skip Something"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
-        val hb = overlayProceedHitbox() ?: restRoomProceed()
+        val hb = overlayProceed()
+            ?: restRoomProceed()
+            ?: cardRewardSkip()
 
         if (hb == null) {
             logger.info("None of proceed buttons exists")
@@ -34,7 +38,7 @@ object ProceedCommand : Command {
         return true
     }
 
-    private fun overlayProceedHitbox(): Hitbox? {
+    private fun overlayProceed(): Hitbox? {
         if (SpireInternals.proceedIsHidden) {
             logger.info("Proceed is hidden")
             return null
@@ -49,6 +53,24 @@ object ProceedCommand : Command {
                 return null
             }
             return room.campfireUI.confirmButton.hb
+        }
+        return null
+    }
+
+    private fun cardRewardSkip(): Hitbox? {
+        if (GameState.currentScreen == AbstractDungeon.CurrentScreen.CARD_REWARD) {
+            val button = SpireInternals.cardRewardSkipButton
+            if (button == null) {
+                logger.info("Card reward skip button is null")
+                return null
+            }
+
+            if (SpireInternals.skipButtonIsHidden(button)) {
+                logger.info("Skip card button is hidden")
+                return null
+            }
+
+            return button.hb
         }
         return null
     }

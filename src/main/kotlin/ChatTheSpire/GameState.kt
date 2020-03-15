@@ -23,7 +23,6 @@ import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.command.RestRoomOptionSelectCommand
-import ChatTheSpire.command.CardRewardSkipCommand
 import ChatTheSpire.util.SafeSpire
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
@@ -101,7 +100,7 @@ object GameState {
             defaultCommand = CardRewardSelectCommand,
             commands = listOf(
                 CardRewardSelectCommand,
-                CardRewardSkipCommand,
+                ProceedCommand,
                 DeckCommand
             ),
             votingSecondsScale = 2.0F

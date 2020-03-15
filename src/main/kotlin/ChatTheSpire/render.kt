@@ -110,7 +110,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                     if (!SpireInternals.skipButtonIsHidden(it)) {
                         font.draw(
                             sb,
-                            "K",
+                            "N",
                             it.hb.x,
                             it.hb.y,
                             it.hb.width,
