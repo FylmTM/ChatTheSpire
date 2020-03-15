@@ -5,7 +5,6 @@ import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.SpireInternals
 import ChatTheSpire.util.getByPosition
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.rooms.RestRoom
 import org.apache.logging.log4j.LogManager
 

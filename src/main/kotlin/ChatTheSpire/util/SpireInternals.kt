@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.screens.CardRewardScreen
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
 import com.megacrit.cardcrawl.ui.buttons.ConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
+import com.megacrit.cardcrawl.ui.buttons.GridSelectConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton
 import com.megacrit.cardcrawl.ui.buttons.SkipCardButton
 import com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption
@@ -52,6 +53,8 @@ object SpireInternals {
         .getAsPublicField("buttons")
     private val confirmButtonIsHiddenField = ConfirmButton::class.java
         .getAsPublicField("isHidden")
+    private val gridSelectConfirmButtonIsHiddenField = GridSelectConfirmButton::class.java
+        .getAsPublicField("isHidden")
 
     val potionUseHitbox: Hitbox?
         get() = potionUseHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox?
@@ -92,9 +95,11 @@ object SpireInternals {
         get() = visibleMapNodesField.get(AbstractDungeon.dungeonMapScreen) as ArrayList<MapRoomNode>
 
     @Suppress("UNCHECKED_CAST")
-    fun restRoomButtons(campfireUI: CampfireUI): ArrayList<AbstractCampfireOption>
-        = restRoomButtonsField.get(campfireUI) as ArrayList<AbstractCampfireOption>
+    fun restRoomButtons(campfireUI: CampfireUI): ArrayList<AbstractCampfireOption> =
+        restRoomButtonsField.get(campfireUI) as ArrayList<AbstractCampfireOption>
 
-    fun confirmButtonIsHidden(button: ConfirmButton): Boolean
-        = confirmButtonIsHiddenField.getBoolean(button)
+    fun confirmButtonIsHidden(button: ConfirmButton): Boolean = confirmButtonIsHiddenField.getBoolean(button)
+
+    val gridSelectConfirmButtonIsHidden: Boolean
+        get() = gridSelectConfirmButtonIsHiddenField.getBoolean(AbstractDungeon.gridSelectScreen.confirmButton)
 }

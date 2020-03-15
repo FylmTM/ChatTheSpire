@@ -22,6 +22,7 @@ object ProceedCommand : Command {
         val hb = overlayProceed()
             ?: restRoomProceed()
             ?: cardRewardSkip()
+            ?: gridConfirm()
 
         if (hb == null) {
             logger.info("None of proceed buttons exists")
@@ -67,6 +68,20 @@ object ProceedCommand : Command {
 
             if (SpireInternals.skipButtonIsHidden(button)) {
                 logger.info("Skip card button is hidden")
+                return null
+            }
+
+            return button.hb
+        }
+        return null
+    }
+
+    private fun gridConfirm(): Hitbox? {
+        if (GameState.currentScreen == AbstractDungeon.CurrentScreen.GRID) {
+            val button = AbstractDungeon.gridSelectScreen.confirmButton
+
+            if (button.isDisabled || SpireInternals.gridSelectConfirmButtonIsHidden) {
+                logger.info("Grid select confirm button is disabled or hidden")
                 return null
             }
 

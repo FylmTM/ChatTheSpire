@@ -152,6 +152,20 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                         false
                     )
                 }
+
+                if (!SpireInternals.gridSelectConfirmButtonIsHidden) {
+                    AbstractDungeon.gridSelectScreen.confirmButton.hb.let {
+                        font.draw(
+                            sb,
+                            "N",
+                            it.x,
+                            it.y,
+                            it.width,
+                            Align.center,
+                            false
+                        )
+                    }
+                }
             }
             else -> {
             }
