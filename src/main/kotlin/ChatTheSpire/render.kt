@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import com.megacrit.cardcrawl.helpers.FontHelper
 import com.megacrit.cardcrawl.potions.PotionSlot
+import com.megacrit.cardcrawl.rooms.RestRoom
 
 fun renderHints(sb: SpriteBatch, font: BitmapFont) {
     if (!AbstractDungeon.isPlayerInDungeon()) {
@@ -229,6 +230,18 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                         "X",
                         it.x - 20.0F * Settings.scale,
                         it.y + it.height - 35.0F * Settings.scale
+                    )
+                }
+            }
+
+            val room = SafeSpire.room
+            if (room is RestRoom) {
+                SpireInternals.restRoomButtons(room.campfireUI).forEachIndexed { i, it ->
+                    font.draw(
+                        sb,
+                        "${i + 1}",
+                        it.hb.x + it.hb.width - 40.0F * Settings.scale,
+                        it.hb.y + it.hb.height - 25.0F * Settings.scale
                     )
                 }
             }

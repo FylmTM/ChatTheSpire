@@ -3,11 +3,13 @@ package ChatTheSpire.util
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.helpers.Hitbox
 import com.megacrit.cardcrawl.map.MapRoomNode
+import com.megacrit.cardcrawl.rooms.CampfireUI
 import com.megacrit.cardcrawl.screens.CardRewardScreen
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton
 import com.megacrit.cardcrawl.ui.buttons.SkipCardButton
+import com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption
 import com.megacrit.cardcrawl.ui.panels.DiscardPilePanel
 import com.megacrit.cardcrawl.ui.panels.DrawPilePanel
 import com.megacrit.cardcrawl.ui.panels.ExhaustPanel
@@ -45,6 +47,8 @@ object SpireInternals {
         .getAsPublicField("hb")
     private val exhaustPilePanelHitboxField = ExhaustPanel::class.java
         .getAsPublicField("hb")
+    private val restRoomButtonsField = CampfireUI::class.java
+        .getAsPublicField("buttons")
 
     val potionUseHitbox: Hitbox?
         get() = potionUseHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox?
@@ -83,4 +87,8 @@ object SpireInternals {
     @Suppress("UNCHECKED_CAST")
     val visibleMapNodes: ArrayList<MapRoomNode>
         get() = visibleMapNodesField.get(AbstractDungeon.dungeonMapScreen) as ArrayList<MapRoomNode>
+
+    @Suppress("UNCHECKED_CAST")
+    fun restRoomButtons(campfireUI: CampfireUI): ArrayList<AbstractCampfireOption>
+        = restRoomButtonsField.get(campfireUI) as ArrayList<AbstractCampfireOption>
 }

@@ -6,6 +6,7 @@ import ChatTheSpire.GameState.State.COMBAT_REWARD
 import ChatTheSpire.GameState.State.DIALOG
 import ChatTheSpire.GameState.State.MAP
 import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
+import ChatTheSpire.GameState.State.REST
 import ChatTheSpire.GameState.State.UNKNOWN
 import ChatTheSpire.command.CardCommand
 import ChatTheSpire.command.CardRewardSelectCommand
@@ -21,11 +22,13 @@ import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
+import ChatTheSpire.command.RestRoomOptionSelectCommand
 import ChatTheSpire.command.SkipCommand
 import ChatTheSpire.util.SafeSpire
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import com.megacrit.cardcrawl.rooms.AbstractRoom
+import com.megacrit.cardcrawl.rooms.RestRoom
 
 object GameState {
 
@@ -57,6 +60,14 @@ object GameState {
                 PotionDestroyCommand
             ),
             votingSecondsScale = 1.5F
+        ),
+        REST(
+            title = "Rest",
+            defaultCommand = RestRoomOptionSelectCommand,
+            commands = listOf(
+                RestRoomOptionSelectCommand
+            ),
+            votingSecondsScale = 1.0F
         ),
         COMBAT(
             title = "Combat",
@@ -121,6 +132,10 @@ object GameState {
                     AbstractDungeon.CurrentScreen.CARD_REWARD -> CARD_REWARD
                     else -> UNKNOWN
                 }
+            }
+
+            if (SafeSpire.room is RestRoom) {
+                return REST
             }
 
             if (RoomEventDialog.optionList?.isNotEmpty() == true) {
