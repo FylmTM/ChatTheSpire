@@ -49,9 +49,10 @@ class AutoVoter : AnimationTimer() {
     override fun handle(now: Long) {
         if (active.value == true && start != 0L) {
             elapsed.set(now - start)
+            val gameState = GameState.state
 
             when (phase.value) {
-                Phase.Voting -> if (elapsed.value > VOTING_SECONDS.value) {
+                Phase.Voting -> if (elapsed.value > VOTING_SECONDS.value * gameState.votingSecondsScale) {
                     logger.info("Transition to VotingStopped")
                     VotingManager.stop()
                     phase.set(Phase.VotingStopped)
@@ -64,7 +65,6 @@ class AutoVoter : AnimationTimer() {
                     start = now
                 }
                 Phase.Pause -> if (elapsed.value > PAUSE_SECONDS.value) {
-                    val gameState = GameState.state
                     val shouldTransition = gameState != GameState.State.UNKNOWN &&
                         (AbstractDungeon.isScreenUp || (
                             !AbstractDungeon.actionManager.turnHasEnded

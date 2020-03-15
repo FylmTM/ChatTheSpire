@@ -30,17 +30,20 @@ object GameState {
     enum class State(
         val title: String,
         val defaultCommand: Command?,
-        val commands: List<Command>
+        val commands: List<Command>,
+        val votingSecondsScale: Float
     ) {
         UNKNOWN(
             title = "Unknown",
             defaultCommand = null,
-            commands = emptyList()
+            commands = emptyList(),
+            votingSecondsScale = 1.0F
         ),
         NOT_IN_DUNGEON(
             title = "Not In Dungeon",
             defaultCommand = null,
-            commands = emptyList()
+            commands = emptyList(),
+            votingSecondsScale = 1.0F
         ),
         DIALOG(
             title = "Dialog",
@@ -48,7 +51,8 @@ object GameState {
             commands = listOf(
                 DialogCommand,
                 PotionDestroyCommand
-            )
+            ),
+            votingSecondsScale = 1.5F
         ),
         COMBAT(
             title = "Combat",
@@ -58,7 +62,8 @@ object GameState {
                 PotionUseCommand,
                 PotionDestroyCommand,
                 EndTurnCommand
-            )
+            ),
+            votingSecondsScale = 1.0F
         ),
         COMBAT_REWARD(
             title = "Combat Reward",
@@ -67,7 +72,8 @@ object GameState {
                 CombatRewardSelectCommand,
                 ProceedCommand,
                 PotionDestroyCommand
-            )
+            ),
+            votingSecondsScale = 1.0F
         ),
         CARD_REWARD(
             title = "Card Reward",
@@ -75,14 +81,16 @@ object GameState {
             commands = listOf(
                 CardRewardSelectCommand,
                 SkipCommand
-            )
+            ),
+            votingSecondsScale = 2.0F
         ),
         MAP(
             title = "Map",
             defaultCommand = MapCommand,
             commands = listOf(
                 MapCommand
-            )
+            ),
+            votingSecondsScale = 1.5F
         );
 
         val prefixes = commands.map(Command::prefix).toHashSet()

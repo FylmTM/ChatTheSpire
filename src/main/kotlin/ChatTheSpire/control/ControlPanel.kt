@@ -1,5 +1,6 @@
 package ChatTheSpire.control
 
+import ChatTheSpire.GameState
 import ChatTheSpire.chat.Discord
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -132,11 +133,12 @@ class VotingView : View() {
                             fontWeight = FontWeight.BOLD
                         }
                         textProperty().bind(autoVoter.elapsed.stringBinding {
+                            val gameState = GameState.state
                             val total = when (autoVoter.phase.value!!) {
-                                Phase.Voting -> VOTING_SECONDS
-                                Phase.VotingStopped -> VOTING_STOPPED_SECONDS
-                                Phase.Pause -> PAUSE_SECONDS
-                            }.value
+                                Phase.Voting -> (VOTING_SECONDS.value * gameState.votingSecondsScale).toLong()
+                                Phase.VotingStopped -> VOTING_STOPPED_SECONDS.value
+                                Phase.Pause -> PAUSE_SECONDS.value
+                            }
                             val left = (TimeUnit.SECONDS.convert(total - it!!.toLong(), TimeUnit.NANOSECONDS) + 1)
                             if (left > 0) {
                                 left.toString()
@@ -155,8 +157,9 @@ class VotingView : View() {
             minHeight = 50.0
             prefHeight = 50.0
             progressProperty().bind(autoVoter.elapsed.doubleBinding {
+                val gameState = GameState.state
                 when (autoVoter.phase.value!!) {
-                    Phase.Voting -> it!!.toDouble() / VOTING_SECONDS.value.toDouble()
+                    Phase.Voting -> it!!.toDouble() / (VOTING_SECONDS.value.toDouble() * gameState.votingSecondsScale)
                     Phase.VotingStopped -> it!!.toDouble() / VOTING_STOPPED_SECONDS.value.toDouble()
                     Phase.Pause -> it!!.toDouble() / PAUSE_SECONDS.value.toDouble()
                 }
