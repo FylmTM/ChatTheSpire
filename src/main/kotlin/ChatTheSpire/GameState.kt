@@ -8,6 +8,7 @@ import ChatTheSpire.GameState.State.MAP
 import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
 import ChatTheSpire.GameState.State.REST
 import ChatTheSpire.GameState.State.UNKNOWN
+import ChatTheSpire.command.CancelCommand
 import ChatTheSpire.command.CardCommand
 import ChatTheSpire.command.CardRewardSelectCommand
 import ChatTheSpire.command.CombatRewardSelectCommand
@@ -109,7 +110,8 @@ object GameState {
             title = "Map",
             defaultCommand = MapCommand,
             commands = listOf(
-                MapCommand
+                MapCommand,
+                CancelCommand
             ),
             votingSecondsScale = 1.5F
         );

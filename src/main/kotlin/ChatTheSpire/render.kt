@@ -20,6 +20,11 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
 
     // State
     val gameState = GameState.state
+    if (gameState == GameState.State.UNKNOWN) {
+        // don't render anything, if we have no idea what we want
+        return
+    }
+
     FontHelper.renderFont(
         sb,
         FontHelper.tipBodyFont,
@@ -37,9 +42,9 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                     sb,
                     "${i + 1}",
                     potion.hb.x,
-                    potion.hb.y - 5.0F * Settings.scale,
+                    potion.hb.y + potion.hb.height - 1.0F * Settings.scale,
                     potion.hb.width,
-                    Align.center,
+                    Align.left,
                     false
                 )
             }
@@ -65,6 +70,22 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
             font.draw(
                 sb,
                 "N",
+                it.x,
+                it.y,
+                it.width,
+                Align.center,
+                false
+            )
+        }
+        SpireInternals.proceedHitbox
+    }
+
+    // Overlay cancel
+    if (!AbstractDungeon.overlayMenu.cancelButton.isHidden) {
+        AbstractDungeon.overlayMenu.cancelButton.hb?.let {
+            font.draw(
+                sb,
+                "B",
                 it.x,
                 it.y,
                 it.width,
