@@ -13,6 +13,7 @@ import ChatTheSpire.GameState.State.UNKNOWN
 import ChatTheSpire.command.CancelCommand
 import ChatTheSpire.command.CardCommand
 import ChatTheSpire.command.CardRewardSelectCommand
+import ChatTheSpire.command.CardRewardSingingBowlCommand
 import ChatTheSpire.command.CombatRewardSelectCommand
 import ChatTheSpire.command.Command
 import ChatTheSpire.command.DeckCommand
@@ -106,6 +107,7 @@ object GameState {
             commands = listOf(
                 CardRewardSelectCommand,
                 ProceedCommand,
+                CardRewardSingingBowlCommand,
                 DeckCommand
             ),
             votingSecondsScale = 2.0F

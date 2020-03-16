@@ -7,7 +7,7 @@ import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import org.apache.logging.log4j.LogManager
 
-private val logger = LogManager.getLogger(PotionDestroyCommand::class.java.name)
+private val logger = LogManager.getLogger(DialogCommand::class.java.name)
 
 object DialogCommand : Command {
 

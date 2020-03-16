@@ -3,6 +3,7 @@ package ChatTheSpire
 import ChatTheSpire.command.CancelCommand
 import ChatTheSpire.command.CardCommand
 import ChatTheSpire.command.CardRewardSelectCommand
+import ChatTheSpire.command.CardRewardSingingBowlCommand
 import ChatTheSpire.command.CombatRewardSelectCommand
 import ChatTheSpire.command.Command
 import ChatTheSpire.command.DeckCommand
@@ -21,6 +22,7 @@ import ChatTheSpire.command.RestRoomOptionSelectCommand
 import ChatTheSpire.console.CancelConsoleCommand
 import ChatTheSpire.console.CardConsoleCommand
 import ChatTheSpire.console.CardRewardSelectConsoleCommand
+import ChatTheSpire.console.CardRewardSingingBowlConsoleCommand
 import ChatTheSpire.console.CombatRewardSelectConsoleCommand
 import ChatTheSpire.console.DeckConsoleCommand
 import ChatTheSpire.console.DialogConsoleCommand
@@ -113,6 +115,10 @@ val commands = listOf(
     CommandData(
         command = HandCardSelectCommand,
         consoleCommandClass = HandCardSelectConsoleCommand::class.java
+    ),
+    CommandData(
+        command = CardRewardSingingBowlCommand,
+        consoleCommandClass = CardRewardSingingBowlConsoleCommand::class.java
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap().also {

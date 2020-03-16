@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.ui.buttons.ConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
 import com.megacrit.cardcrawl.ui.buttons.GridSelectConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton
+import com.megacrit.cardcrawl.ui.buttons.SingingBowlButton
 import com.megacrit.cardcrawl.ui.buttons.SkipCardButton
 import com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption
 import com.megacrit.cardcrawl.ui.panels.DiscardPilePanel
@@ -38,6 +39,8 @@ object SpireInternals {
         .getAsPublicField("isHidden")
     private val cardRewardSkipButtonField = CardRewardScreen::class.java
         .getAsPublicField("skipButton")
+    private val cardRewardBowlButtonField = CardRewardScreen::class.java
+        .getAsPublicField("bowlButton")
     private val skipCardButtonIsHiddenField = SkipCardButton::class.java
         .getAsPublicField("isHidden")
     private val visibleMapNodesField = DungeonMapScreen::class.java
@@ -75,7 +78,10 @@ object SpireInternals {
         get() = proceedIsHiddenField.getBoolean(AbstractDungeon.overlayMenu.proceedButton)
 
     val cardRewardSkipButton: SkipCardButton?
-        get() = cardRewardSkipButtonField.get(AbstractDungeon.cardRewardScreen) as SkipCardButton
+        get() = cardRewardSkipButtonField.get(AbstractDungeon.cardRewardScreen) as SkipCardButton?
+
+    val cardRewardBowlButton: SingingBowlButton?
+        get() = cardRewardBowlButtonField.get(AbstractDungeon.cardRewardScreen) as SingingBowlButton?
 
     fun skipButtonIsHidden(button: SkipCardButton): Boolean {
         return skipCardButtonIsHiddenField.getBoolean(button)

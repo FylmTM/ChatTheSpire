@@ -139,6 +139,19 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                         )
                     }
                 }
+                SpireInternals.cardRewardBowlButton?.let {
+                    if (!it.isHidden) {
+                        font.draw(
+                            sb,
+                            "bowl",
+                            it.hb.x,
+                            it.hb.y,
+                            it.hb.width,
+                            Align.center,
+                            false
+                        )
+                    }
+                }
             }
             AbstractDungeon.CurrentScreen.GRID -> {
                 if (AbstractDungeon.gridSelectScreen?.confirmScreenUp == false) {

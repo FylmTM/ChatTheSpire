@@ -7,7 +7,7 @@ import ChatTheSpire.util.getByPosition
 import org.apache.logging.log4j.LogManager
 import java.awt.event.KeyEvent
 
-private val logger = LogManager.getLogger(CardCommand::class.java.name)
+private val logger = LogManager.getLogger(HandCardSelectCommand::class.java.name)
 
 object HandCardSelectCommand : Command {
 

@@ -6,7 +6,7 @@ import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.apache.logging.log4j.LogManager
 
-private val logger = LogManager.getLogger(CombatRewardSelectCommand::class.java.name)
+private val logger = LogManager.getLogger(CardRewardSelectCommand::class.java.name)
 
 object CardRewardSelectCommand : Command {
     override val prefix: String = "cardreward"
