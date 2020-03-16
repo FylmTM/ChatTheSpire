@@ -20,6 +20,7 @@ import ChatTheSpire.command.DiscardPileCommand
 import ChatTheSpire.command.DrawPileCommand
 import ChatTheSpire.command.EndTurnCommand
 import ChatTheSpire.command.ExhaustPileCommand
+import ChatTheSpire.command.GridSelectCardCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
@@ -118,8 +119,10 @@ object GameState {
         ),
         GRID(
             title = "Grid",
-            defaultCommand = null,
+            defaultCommand = GridSelectCardCommand,
             commands = listOf(
+                GridSelectCardCommand,
+                ProceedCommand,
                 CancelCommand
             ),
             votingSecondsScale = 2.0F

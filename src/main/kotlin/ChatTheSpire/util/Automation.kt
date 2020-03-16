@@ -66,4 +66,28 @@ object Automation {
         hover(hitbox)
         click()
     }
+
+    fun scrollTo(hb: Hitbox) {
+        for (i in 0..50) {
+            val y = (Settings.HEIGHT - hb.cY.toInt())
+
+            when {
+                // up
+                y < 150 * Settings.scale -> {
+                    bot.mouseWheel(-10)
+                    sleep(50)
+                }
+                // down
+                y > Settings.HEIGHT - 100 * Settings.scale -> {
+                    bot.mouseWheel(10)
+                    sleep(50)
+                }
+                // visible
+                else -> {
+                    return
+                }
+            }
+        }
+        quickSleep()
+    }
 }

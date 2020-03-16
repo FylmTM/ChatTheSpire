@@ -141,16 +141,18 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                 }
             }
             AbstractDungeon.CurrentScreen.GRID -> {
-                AbstractDungeon.gridSelectScreen?.targetGroup?.group?.forEachIndexed { i, card ->
-                    font.draw(
-                        sb,
-                        "${i + 1}",
-                        card.hb.x,
-                        card.hb.y + 25.0F * Settings.scale,
-                        card.hb.width,
-                        Align.center,
-                        false
-                    )
+                if (AbstractDungeon.gridSelectScreen?.confirmScreenUp == false) {
+                    AbstractDungeon.gridSelectScreen?.targetGroup?.group?.forEachIndexed { i, card ->
+                        font.draw(
+                            sb,
+                            "${i + 1}",
+                            card.hb.x,
+                            card.hb.y + 25.0F * Settings.scale,
+                            card.hb.width,
+                            Align.center,
+                            false
+                        )
+                    }
                 }
 
                 if (!SpireInternals.gridSelectConfirmButtonIsHidden) {

@@ -11,6 +11,7 @@ import ChatTheSpire.command.DiscardPileCommand
 import ChatTheSpire.command.DrawPileCommand
 import ChatTheSpire.command.EndTurnCommand
 import ChatTheSpire.command.ExhaustPileCommand
+import ChatTheSpire.command.GridSelectCardCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
@@ -26,6 +27,7 @@ import ChatTheSpire.console.DiscardPileConsoleCommand
 import ChatTheSpire.console.DrawPileConsoleCommand
 import ChatTheSpire.console.EndTurnConsoleCommand
 import ChatTheSpire.console.ExhaustPileConsoleCommand
+import ChatTheSpire.console.GridSelectCardConsoleCommand
 import ChatTheSpire.console.MapConsoleCommand
 import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
@@ -101,6 +103,10 @@ val commands = listOf(
     CommandData(
         command = CancelCommand,
         consoleCommandClass = CancelConsoleCommand::class.java
+    ),
+    CommandData(
+        command = GridSelectCardCommand,
+        consoleCommandClass = GridSelectCardConsoleCommand::class.java
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap().also {
