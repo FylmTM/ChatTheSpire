@@ -32,6 +32,9 @@ object MapCommand : Command {
 
         if (doAction) {
             Job.execute {
+                Automation.rest()
+                Automation.click()
+                Automation.scrollTo(mapNode.hb)
                 Automation.click(mapNode.hb)
                 Automation.rest()
             }

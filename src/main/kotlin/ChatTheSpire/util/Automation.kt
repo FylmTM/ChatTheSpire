@@ -75,12 +75,12 @@ object Automation {
                 // up
                 y < 150 * Settings.scale -> {
                     bot.mouseWheel(-10)
-                    sleep(50)
+                    quickSleep()
                 }
                 // down
                 y > Settings.HEIGHT - 100 * Settings.scale -> {
                     bot.mouseWheel(10)
-                    sleep(50)
+                    quickSleep()
                 }
                 // visible
                 else -> {
@@ -88,6 +88,6 @@ object Automation {
                 }
             }
         }
-        quickSleep()
+        shortSleep()
     }
 }
