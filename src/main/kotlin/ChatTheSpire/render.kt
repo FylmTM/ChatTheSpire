@@ -169,6 +169,22 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                     }
                 }
             }
+            AbstractDungeon.CurrentScreen.HAND_SELECT -> {
+                if (!SpireInternals.cardSelectConfirmButtonIsHidden) {
+                    AbstractDungeon.handCardSelectScreen.button.hb.let {
+                        font.draw(
+                            sb,
+                            "N",
+                            it.x,
+                            it.y,
+                            it.width,
+                            Align.center,
+                            false
+                        )
+                    }
+                }
+                renderHand(sb, font)
+            }
             else -> {
             }
         }
@@ -194,26 +210,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
         }
 
         // Hand
-        if (SafeSpire.hand != null) {
-            val size = SafeSpire.hand!!.size
-            SafeSpire.hand!!.forEachIndexed { i, card ->
-                if (i == 9) {
-                    font.draw(
-                        sb,
-                        "0",
-                        card.hb.x + card.hb.width * ((i).toFloat() / size),
-                        card.hb.y + card.hb.height + 30.0F + Settings.scale
-                    )
-                } else {
-                    font.draw(
-                        sb,
-                        "${i + 1}",
-                        card.hb.x + card.hb.width * ((i).toFloat() / size),
-                        card.hb.y + card.hb.height + 30.0F + Settings.scale
-                    )
-                }
-            }
-        }
+        renderHand(sb, font)
 
         // Monsters
         SafeSpire.monsters?.forEachIndexed { i, monster ->
@@ -284,6 +281,7 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                 }
             }
 
+            // Rest room
             val room = SafeSpire.room
             if (room is RestRoom) {
                 if (!room.campfireUI.somethingSelected) {
@@ -310,6 +308,29 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
                         )
                     }
                 }
+            }
+        }
+    }
+}
+
+private fun renderHand(sb: SpriteBatch, font: BitmapFont) {
+    if (SafeSpire.hand != null) {
+        val size = SafeSpire.hand!!.size
+        SafeSpire.hand!!.forEachIndexed { i, card ->
+            if (i == 9) {
+                font.draw(
+                    sb,
+                    "0",
+                    card.hb.x + card.hb.width * ((i).toFloat() / size),
+                    card.hb.y + card.hb.height + 30.0F + Settings.scale
+                )
+            } else {
+                font.draw(
+                    sb,
+                    "${i + 1}",
+                    card.hb.x + card.hb.width * ((i).toFloat() / size),
+                    card.hb.y + card.hb.height + 30.0F + Settings.scale
+                )
             }
         }
     }

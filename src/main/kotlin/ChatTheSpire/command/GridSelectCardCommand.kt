@@ -27,14 +27,9 @@ object GridSelectCardCommand : Command {
 
         val cardPosition = parameters[0]
 
-        val firstCard = AbstractDungeon.gridSelectScreen?.targetGroup?.group?.getByPosition(1)
         val card = AbstractDungeon.gridSelectScreen?.targetGroup?.group?.getByPosition(cardPosition)
         if (card == null) {
             logger.info("Invalid grid card position: {}", cardPosition)
-            return false
-        }
-        if (firstCard == null) {
-            logger.info("There is no cards in grid selection")
             return false
         }
 
@@ -45,6 +40,7 @@ object GridSelectCardCommand : Command {
 
                 Automation.scrollTo(card.hb)
                 Automation.click(card.hb)
+                Automation.rest()
             }
         }
 

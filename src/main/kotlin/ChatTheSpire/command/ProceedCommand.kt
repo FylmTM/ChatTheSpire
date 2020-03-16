@@ -16,13 +16,14 @@ object ProceedCommand : Command {
 
     override val prefix: String = "n"
 
-    override val syntax: String = "n - Next/Proceed/Skip Something"
+    override val syntax: String = "n - Next/Proceed/Confirm/Skip"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         val hb = overlayProceed()
             ?: restRoomProceed()
             ?: cardRewardSkip()
             ?: gridConfirm()
+            ?: handSelectConfirm()
 
         if (hb == null) {
             logger.info("None of proceed buttons exists")
@@ -86,6 +87,17 @@ object ProceedCommand : Command {
             }
 
             return button.hb
+        }
+        return null
+    }
+
+    private fun handSelectConfirm(): Hitbox? {
+        if (GameState.currentScreen == AbstractDungeon.CurrentScreen.HAND_SELECT) {
+            if (SpireInternals.cardSelectConfirmButtonIsHidden) {
+                logger.info("Hand select confirm button is hidden")
+                return null
+            }
+            return AbstractDungeon.handCardSelectScreen.button.hb
         }
         return null
     }

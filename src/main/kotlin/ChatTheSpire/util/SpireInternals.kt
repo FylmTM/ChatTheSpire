@@ -6,8 +6,7 @@ import com.megacrit.cardcrawl.map.MapRoomNode
 import com.megacrit.cardcrawl.rooms.CampfireUI
 import com.megacrit.cardcrawl.screens.CardRewardScreen
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
-import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar
-import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen
+import com.megacrit.cardcrawl.ui.buttons.CardSelectConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.ConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
 import com.megacrit.cardcrawl.ui.buttons.GridSelectConfirmButton
@@ -57,8 +56,8 @@ object SpireInternals {
         .getAsPublicField("isHidden")
     private val gridSelectConfirmButtonIsHiddenField = GridSelectConfirmButton::class.java
         .getAsPublicField("isHidden")
-    private val gridScrollBarField = GridCardSelectScreen::class.java
-        .getAsPublicField("scrollBar")
+    private val cardSelectConfirmButtonIsHiddenField = CardSelectConfirmButton::class.java
+        .getAsPublicField("isHidden")
 
     val potionUseHitbox: Hitbox?
         get() = potionUseHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox?
@@ -107,6 +106,6 @@ object SpireInternals {
     val gridSelectConfirmButtonIsHidden: Boolean
         get() = gridSelectConfirmButtonIsHiddenField.getBoolean(AbstractDungeon.gridSelectScreen.confirmButton)
 
-    val gridScrollBar: ScrollBar
-        get() = gridScrollBarField.get(AbstractDungeon.gridSelectScreen) as ScrollBar
+    val cardSelectConfirmButtonIsHidden: Boolean
+        get() = cardSelectConfirmButtonIsHiddenField.getBoolean(AbstractDungeon.handCardSelectScreen.button)
 }

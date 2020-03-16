@@ -5,6 +5,7 @@ import ChatTheSpire.GameState.State.COMBAT
 import ChatTheSpire.GameState.State.COMBAT_REWARD
 import ChatTheSpire.GameState.State.DIALOG
 import ChatTheSpire.GameState.State.GRID
+import ChatTheSpire.GameState.State.HAND_SELECT
 import ChatTheSpire.GameState.State.MAP
 import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
 import ChatTheSpire.GameState.State.REST
@@ -21,6 +22,7 @@ import ChatTheSpire.command.DrawPileCommand
 import ChatTheSpire.command.EndTurnCommand
 import ChatTheSpire.command.ExhaustPileCommand
 import ChatTheSpire.command.GridSelectCardCommand
+import ChatTheSpire.command.HandCardSelectCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
@@ -126,6 +128,15 @@ object GameState {
                 CancelCommand
             ),
             votingSecondsScale = 2.0F
+        ),
+        HAND_SELECT(
+            title = "Hand select",
+            defaultCommand = HandCardSelectCommand,
+            commands = listOf(
+                HandCardSelectCommand,
+                ProceedCommand
+            ),
+            votingSecondsScale = 1.5F
         );
 
         val prefixes = commands.map(Command::prefix).toHashSet()
@@ -145,6 +156,7 @@ object GameState {
                     AbstractDungeon.CurrentScreen.COMBAT_REWARD -> COMBAT_REWARD
                     AbstractDungeon.CurrentScreen.CARD_REWARD -> CARD_REWARD
                     AbstractDungeon.CurrentScreen.GRID -> GRID
+                    AbstractDungeon.CurrentScreen.HAND_SELECT -> HAND_SELECT
                     else -> UNKNOWN
                 }
             }
