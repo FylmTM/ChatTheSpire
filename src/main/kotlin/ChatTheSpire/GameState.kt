@@ -71,7 +71,7 @@ object GameState {
                 DialogCommand,
                 PotionDestroyCommand
             ),
-            votingSecondsScale = 1.5F
+            votingSecondsScale = 2.0F
         ),
         REST(
             title = "Rest",
@@ -126,7 +126,7 @@ object GameState {
                 CardRewardSingingBowlCommand,
                 DeckCommand
             ),
-            votingSecondsScale = 2.0F
+            votingSecondsScale = 2.5F
         ),
         BOSS_REWARD(
             title = "Boss Reward",
@@ -136,7 +136,7 @@ object GameState {
                 ProceedCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 2.5F
+            votingSecondsScale = 3.0F
         ),
         MAP(
             title = "Map",
@@ -146,7 +146,7 @@ object GameState {
                 MapBossCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 1.5F
+            votingSecondsScale = 2.0F
         ),
         GRID(
             title = "Grid",
@@ -156,7 +156,7 @@ object GameState {
                 ProceedCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 2.0F
+            votingSecondsScale = 2.5F
         ),
         HAND_SELECT(
             title = "Hand select",
