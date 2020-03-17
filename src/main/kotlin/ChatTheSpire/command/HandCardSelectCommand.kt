@@ -1,9 +1,11 @@
 package ChatTheSpire.command
 
+import ChatTheSpire.GameState
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.apache.logging.log4j.LogManager
 import java.awt.event.KeyEvent
 
@@ -18,6 +20,10 @@ object HandCardSelectCommand : Command {
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size != 1) {
             logger.info("Invalid parameters size: {}", parameters.size)
+            return false
+        }
+        if (GameState.currentScreen != AbstractDungeon.CurrentScreen.HAND_SELECT) {
+            logger.info("Current screen is not hand select")
             return false
         }
 

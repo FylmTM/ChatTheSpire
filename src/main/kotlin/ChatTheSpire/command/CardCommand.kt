@@ -5,6 +5,7 @@ import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.getByPosition
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.apache.logging.log4j.LogManager
 import java.awt.event.KeyEvent
 
@@ -19,6 +20,11 @@ object CardCommand : Command {
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size !in 1..2) {
             logger.info("Invalid parameters size: {}", parameters.size)
+            return false
+        }
+
+        if (AbstractDungeon.isScreenUp) {
+            logger.info("There is screen up")
             return false
         }
 

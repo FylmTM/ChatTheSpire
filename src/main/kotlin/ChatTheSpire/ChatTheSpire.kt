@@ -1,6 +1,5 @@
 package ChatTheSpire
 
-import ChatTheSpire.chat.Discord
 import basemod.BaseMod
 import basemod.interfaces.PostInitializeSubscriber
 import basemod.interfaces.PostRenderSubscriber
