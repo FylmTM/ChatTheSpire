@@ -5,9 +5,10 @@ import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
 import ChatTheSpire.util.SpireInternals
 import com.megacrit.cardcrawl.rooms.TreasureRoom
+import com.megacrit.cardcrawl.rooms.TreasureRoomBoss
 import org.apache.logging.log4j.LogManager
 
-private val logger = LogManager.getLogger(EndTurnCommand::class.java.name)
+private val logger = LogManager.getLogger(TreasureChestOpenCommand::class.java.name)
 
 object TreasureChestOpenCommand : Command {
 
@@ -16,20 +17,23 @@ object TreasureChestOpenCommand : Command {
     override val syntax: String = "t - open treasure chest"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
-        val room = SafeSpire.room
-        if (room !is TreasureRoom) {
-            logger.info("Not in treasure room")
+        val chest = when (val room = SafeSpire.room) {
+            is TreasureRoom -> room.chest
+            is TreasureRoomBoss -> room.chest
+            else -> null
+        }
+
+        if (chest == null) {
+            logger.info("We are not in treasure room")
             return false
         }
 
-        val chest = room.chest
         if (chest.isOpen) {
             logger.info("Chest is already open")
             return false
         }
 
         val hb = SpireInternals.chestHitbox(chest)
-
         if (doAction) {
             Job.execute {
                 hb?.let {

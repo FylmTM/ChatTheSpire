@@ -47,4 +47,9 @@ object SafeSpire {
                     }
                 }
         }
+
+    val isNextRoomBoss: Boolean
+        get() {
+            return AbstractDungeon.currMapNode?.y == 14 || (AbstractDungeon.id == "TheEnding" && AbstractDungeon.currMapNode?.y == 2)
+        }
 }

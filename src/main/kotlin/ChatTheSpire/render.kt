@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.potions.PotionSlot
 import com.megacrit.cardcrawl.rooms.AbstractRoom
 import com.megacrit.cardcrawl.rooms.RestRoom
 import com.megacrit.cardcrawl.rooms.TreasureRoom
+import com.megacrit.cardcrawl.rooms.TreasureRoomBoss
 
 fun renderHints(sb: SpriteBatch, font: BitmapFont) {
     if (!AbstractDungeon.isPlayerInDungeon()) {
@@ -28,13 +29,13 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
     }
     val room = SafeSpire.room
 
-    renderState(sb, font, gameState)
+    renderState(sb, gameState)
     renderOverlay(sb, font)
 
     if (AbstractDungeon.isScreenUp) {
         renderScreens(sb, font)
     } else {
-        renderCombatRoom(sb, font, room)
+        renderCombatRoom(sb, font)
         renderCombatPanels(sb, font)
         renderEvents(sb, font, room)
 
@@ -42,11 +43,13 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
             renderRestRoom(sb, font, room)
         } else if (room is TreasureRoom) {
             renderTreasureRoom(sb, font, room)
+        } else if (room is TreasureRoomBoss) {
+            renderTreasureRoomBoss(sb, font, room)
         }
     }
 }
 
-fun renderState(sb: SpriteBatch, font: BitmapFont, gameState: GameState.State) {
+fun renderState(sb: SpriteBatch, gameState: GameState.State) {
     FontHelper.renderFont(
         sb,
         FontHelper.tipBodyFont,
@@ -139,6 +142,10 @@ private fun renderScreens(sb: SpriteBatch, font: BitmapFont) {
         AbstractDungeon.CurrentScreen.MAP -> {
             SafeSpire.nextMapNodes.forEachIndexed { i, node ->
                 font.draw(sb, "${i + 1}", node.hb.x, node.hb.y, node.hb.width, Align.center, false)
+            }
+            if (SafeSpire.isNextRoomBoss) {
+                val hb = AbstractDungeon.dungeonMapScreen.map.bossHb
+                font.draw(sb, "boss", hb.x, hb.y - 10 * Settings.scale, hb.width, Align.center, false)
             }
         }
         AbstractDungeon.CurrentScreen.COMBAT_REWARD -> {
@@ -306,7 +313,7 @@ fun renderCombatPanels(sb: SpriteBatch, font: BitmapFont) {
     }
 }
 
-fun renderCombatRoom(sb: SpriteBatch, font: BitmapFont, room: AbstractRoom?) {
+fun renderCombatRoom(sb: SpriteBatch, font: BitmapFont) {
     // Hand
     renderHand(sb, font)
 
@@ -361,6 +368,21 @@ fun renderTreasureRoom(sb: SpriteBatch, font: BitmapFont, room: TreasureRoom) {
             "T",
             it.x,
             it.y,
+            it.width,
+            Align.center,
+            false
+        )
+    }
+}
+
+fun renderTreasureRoomBoss(sb: SpriteBatch, font: BitmapFont, room: TreasureRoomBoss) {
+    val chest = room.chest
+    SpireInternals.chestHitbox(chest)?.let {
+        font.draw(
+            sb,
+            "T",
+            it.x,
+            it.y - 30 * Settings.scale,
             it.width,
             Align.center,
             false

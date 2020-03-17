@@ -25,6 +25,7 @@ import ChatTheSpire.command.EndTurnCommand
 import ChatTheSpire.command.ExhaustPileCommand
 import ChatTheSpire.command.GridSelectCardCommand
 import ChatTheSpire.command.HandCardSelectCommand
+import ChatTheSpire.command.MapBossCommand
 import ChatTheSpire.command.MapCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
@@ -37,6 +38,7 @@ import com.megacrit.cardcrawl.events.RoomEventDialog
 import com.megacrit.cardcrawl.rooms.AbstractRoom
 import com.megacrit.cardcrawl.rooms.RestRoom
 import com.megacrit.cardcrawl.rooms.TreasureRoom
+import com.megacrit.cardcrawl.rooms.TreasureRoomBoss
 
 object GameState {
 
@@ -94,7 +96,7 @@ object GameState {
             votingSecondsScale = 1.0F
         ),
         TREASURE(
-            title = "Treasure room",
+            title = "Treasure",
             defaultCommand = null,
             commands = listOf(
                 TreasureChestOpenCommand,
@@ -129,6 +131,7 @@ object GameState {
             defaultCommand = MapCommand,
             commands = listOf(
                 MapCommand,
+                MapBossCommand,
                 CancelCommand
             ),
             votingSecondsScale = 1.5F
@@ -180,6 +183,10 @@ object GameState {
             }
 
             if (SafeSpire.room is TreasureRoom) {
+                return TREASURE
+            }
+
+            if (SafeSpire.room is TreasureRoomBoss) {
                 return TREASURE
             }
 
