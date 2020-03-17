@@ -11,7 +11,7 @@ private val logger = LogManager.getLogger(HandCardSelectCommand::class.java.name
 
 object HandCardSelectCommand : Command {
 
-    override val prefix: String = "hand"
+    override val prefix: String = "h"
 
     override val syntax: String = "[card] - select card"
 

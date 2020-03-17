@@ -7,6 +7,8 @@ import com.megacrit.cardcrawl.rewards.chests.AbstractChest
 import com.megacrit.cardcrawl.rooms.CampfireUI
 import com.megacrit.cardcrawl.screens.CardRewardScreen
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
+import com.megacrit.cardcrawl.screens.mainMenu.MenuCancelButton
+import com.megacrit.cardcrawl.screens.select.BossRelicSelectScreen
 import com.megacrit.cardcrawl.ui.buttons.CardSelectConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.ConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
@@ -64,6 +66,8 @@ object SpireInternals {
         .getAsPublicField("isHidden")
     private val chestHitboxField = AbstractChest::class.java
         .getAsPublicField("hb")
+    private val bossRelicCancelButtonField = BossRelicSelectScreen::class.java
+        .getAsPublicField("cancelButton")
 
     val potionUseHitbox: Hitbox?
         get() = potionUseHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox?
@@ -120,4 +124,7 @@ object SpireInternals {
 
     fun chestHitbox(chest: AbstractChest): Hitbox? =
         chestHitboxField.get(chest) as Hitbox?
+
+    val bossRelicCancelButton: MenuCancelButton?
+        get() = bossRelicCancelButtonField.get(AbstractDungeon.bossRelicScreen) as MenuCancelButton?
 }

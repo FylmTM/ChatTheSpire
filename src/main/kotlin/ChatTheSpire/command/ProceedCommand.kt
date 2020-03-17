@@ -24,6 +24,7 @@ object ProceedCommand : Command {
             ?: cardRewardSkip()
             ?: gridConfirm()
             ?: handSelectConfirm()
+            ?: bossRelicConfirm()
 
         if (hb == null) {
             logger.info("None of proceed buttons exists")
@@ -98,6 +99,18 @@ object ProceedCommand : Command {
                 return null
             }
             return AbstractDungeon.handCardSelectScreen.button.hb
+        }
+        return null
+    }
+
+    private fun bossRelicConfirm(): Hitbox? {
+        if (GameState.currentScreen == AbstractDungeon.CurrentScreen.BOSS_REWARD) {
+            val button = AbstractDungeon.bossRelicScreen?.confirmButton
+            if (button == null || SpireInternals.confirmButtonIsHidden(button)) {
+                logger.info("Boss relic confirm is hidden")
+                return null
+            }
+            return button.hb
         }
         return null
     }

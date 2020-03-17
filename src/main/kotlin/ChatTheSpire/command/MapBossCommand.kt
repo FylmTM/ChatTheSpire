@@ -1,5 +1,6 @@
 package ChatTheSpire.command
 
+import ChatTheSpire.GameState
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
@@ -15,7 +16,7 @@ object MapBossCommand : Command {
     override val syntax: String = "boss - fight boss!"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
-        if (AbstractDungeon.screen != AbstractDungeon.CurrentScreen.MAP) {
+        if (GameState.currentScreen != AbstractDungeon.CurrentScreen.MAP) {
             logger.info("Map is not opened")
             return false
         }

@@ -1,7 +1,9 @@
 package ChatTheSpire.command
 
+import ChatTheSpire.GameState
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
+import ChatTheSpire.util.SpireInternals
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.helpers.Hitbox
 import org.apache.logging.log4j.LogManager
@@ -15,7 +17,7 @@ object CancelCommand : Command {
     override val syntax: String = "b - back/return/cancel"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
-        val hb = overlayCancel()
+        val hb = overlayCancel() ?: bossRelicCancel()
 
         if (hb == null) {
             logger.info("None of cancel buttons exists")
@@ -38,5 +40,16 @@ object CancelCommand : Command {
             return null
         }
         return AbstractDungeon.overlayMenu.cancelButton.hb
+    }
+
+    private fun bossRelicCancel(): Hitbox? {
+        if (GameState.currentScreen == AbstractDungeon.CurrentScreen.BOSS_REWARD) {
+            if (SpireInternals.bossRelicCancelButton?.isHidden == true) {
+                logger.info("Boss relic cancel is hidden")
+                return null
+            }
+            return SpireInternals.bossRelicCancelButton?.hb
+        }
+        return null
     }
 }

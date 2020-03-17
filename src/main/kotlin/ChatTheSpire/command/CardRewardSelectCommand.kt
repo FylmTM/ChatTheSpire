@@ -1,5 +1,6 @@
 package ChatTheSpire.command
 
+import ChatTheSpire.GameState
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.getByPosition
@@ -16,6 +17,10 @@ object CardRewardSelectCommand : Command {
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (parameters.size != 1) {
             logger.info("Invalid parameters size: {}", parameters.size)
+            return false
+        }
+        if (GameState.currentScreen != AbstractDungeon.CurrentScreen.CARD_REWARD) {
+            logger.info("Current screen is not card reward")
             return false
         }
 

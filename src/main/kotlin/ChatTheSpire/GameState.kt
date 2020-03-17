@@ -1,5 +1,6 @@
 package ChatTheSpire
 
+import ChatTheSpire.GameState.State.BOSS_REWARD
 import ChatTheSpire.GameState.State.CARD_REWARD
 import ChatTheSpire.GameState.State.COMBAT
 import ChatTheSpire.GameState.State.COMBAT_REWARD
@@ -11,6 +12,7 @@ import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
 import ChatTheSpire.GameState.State.REST
 import ChatTheSpire.GameState.State.TREASURE
 import ChatTheSpire.GameState.State.UNKNOWN
+import ChatTheSpire.command.BossRewardSelectCommand
 import ChatTheSpire.command.CancelCommand
 import ChatTheSpire.command.CardCommand
 import ChatTheSpire.command.CardRewardSelectCommand
@@ -126,6 +128,16 @@ object GameState {
             ),
             votingSecondsScale = 2.0F
         ),
+        BOSS_REWARD(
+            title = "Boss Reward",
+            defaultCommand = BossRewardSelectCommand,
+            commands = listOf(
+                BossRewardSelectCommand,
+                ProceedCommand,
+                CancelCommand
+            ),
+            votingSecondsScale = 2.5F
+        ),
         MAP(
             title = "Map",
             defaultCommand = MapCommand,
@@ -174,6 +186,7 @@ object GameState {
                     AbstractDungeon.CurrentScreen.CARD_REWARD -> CARD_REWARD
                     AbstractDungeon.CurrentScreen.GRID -> GRID
                     AbstractDungeon.CurrentScreen.HAND_SELECT -> HAND_SELECT
+                    AbstractDungeon.CurrentScreen.BOSS_REWARD -> BOSS_REWARD
                     else -> UNKNOWN
                 }
             }

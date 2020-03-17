@@ -7,28 +7,6 @@ import org.javacord.api.DiscordApiBuilder
 
 private const val token = "Njg4MDk3NDUxNzUxNTA1OTIw.Xmvgmw.mdoiLpmE_1Mi82Hrf_GR6IOF5r0"
 
-//object Discord {
-//    private var jda: JDA? = null
-//
-//    fun listen() {
-//        jda = JDABuilder(token)
-//            .addEventListeners(MessageListener)
-//            .build()
-//    }
-//}
-//
-//object MessageListener : ListenerAdapter() {
-//    override fun onMessageReceived(event: MessageReceivedEvent) {
-//        if (event.author.isBot) {
-//            return
-//        }
-//
-//        if (event.channel.name == "chat-the-spire") {
-//            println(event.message)
-//        }
-//    }
-//}
-
 object Discord {
 
     var api: DiscordApi? = null

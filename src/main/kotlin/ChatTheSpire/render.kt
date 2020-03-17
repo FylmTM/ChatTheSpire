@@ -243,6 +243,49 @@ private fun renderScreens(sb: SpriteBatch, font: BitmapFont) {
             }
             renderHand(sb, font)
         }
+        AbstractDungeon.CurrentScreen.BOSS_REWARD -> {
+            AbstractDungeon.bossRelicScreen?.relics?.forEachIndexed() { i, relic ->
+                font.draw(
+                    sb,
+                    "${i + 1}",
+                    relic.hb.x,
+                    relic.hb.y,
+                    relic.hb.width,
+                    Align.center,
+                    false
+                )
+            }
+            val cancelButton = SpireInternals.bossRelicCancelButton
+            val confirmButton = AbstractDungeon.bossRelicScreen?.confirmButton
+
+            if (cancelButton != null && !cancelButton.isHidden) {
+                cancelButton.hb?.let {
+                    font.draw(
+                        sb,
+                        "B",
+                        it.x,
+                        it.y,
+                        it.width,
+                        Align.center,
+                        false
+                    )
+                }
+            }
+
+            if (confirmButton != null && !SpireInternals.confirmButtonIsHidden(confirmButton)) {
+                confirmButton.hb?.let {
+                    font.draw(
+                        sb,
+                        "N",
+                        it.x,
+                        it.y,
+                        it.width,
+                        Align.center,
+                        false
+                    )
+                }
+            }
+        }
         else -> {
         }
     }

@@ -47,7 +47,7 @@ class ChatTheSpire : PostInitializeSubscriber, PostRenderSubscriber {
         initializeConsoleCommands()
         initializeControlPanel()
 
-        Discord.listen()
+        // Discord.listen()
     }
 
     override fun receivePostRender(sb: SpriteBatch) {
