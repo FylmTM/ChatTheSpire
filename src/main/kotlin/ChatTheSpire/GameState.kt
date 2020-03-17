@@ -158,7 +158,7 @@ object GameState {
 
         val prefixes = commands.map(Command::prefix).toHashSet()
         val syntax = commands.map(Command::syntax).joinToString("\n")
-        val debug = "$syntax".trim()
+        val debug = "$title\n\n$syntax".trim()
     }
 
     val state: State
