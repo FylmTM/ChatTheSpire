@@ -12,7 +12,7 @@ object CancelCommand : Command {
 
     override val prefix: String = "b"
 
-    override val syntax: String = "b - Back/Return/Cancel"
+    override val syntax: String = "b - back/return/cancel"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         val hb = overlayCancel()

@@ -19,6 +19,7 @@ import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.command.RestRoomOptionSelectCommand
+import ChatTheSpire.command.TreasureChestOpenCommand
 import ChatTheSpire.console.CancelConsoleCommand
 import ChatTheSpire.console.CardConsoleCommand
 import ChatTheSpire.console.CardRewardSelectConsoleCommand
@@ -37,6 +38,7 @@ import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
 import ChatTheSpire.console.ProceedConsoleCommand
 import ChatTheSpire.console.RestRoomOptionSelectConsoleCommand
+import ChatTheSpire.console.TreasureChestOpenConsoleCommand
 import basemod.devcommands.ConsoleCommand
 import org.apache.logging.log4j.LogManager
 
@@ -119,6 +121,10 @@ val commands = listOf(
     CommandData(
         command = CardRewardSingingBowlCommand,
         consoleCommandClass = CardRewardSingingBowlConsoleCommand::class.java
+    ),
+    CommandData(
+        command = TreasureChestOpenCommand,
+        consoleCommandClass = TreasureChestOpenConsoleCommand::class.java
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap().also {

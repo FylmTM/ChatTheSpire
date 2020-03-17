@@ -3,6 +3,7 @@ package ChatTheSpire.util
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.helpers.Hitbox
 import com.megacrit.cardcrawl.map.MapRoomNode
+import com.megacrit.cardcrawl.rewards.chests.AbstractChest
 import com.megacrit.cardcrawl.rooms.CampfireUI
 import com.megacrit.cardcrawl.screens.CardRewardScreen
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
@@ -61,6 +62,8 @@ object SpireInternals {
         .getAsPublicField("isHidden")
     private val cardSelectConfirmButtonIsHiddenField = CardSelectConfirmButton::class.java
         .getAsPublicField("isHidden")
+    private val chestHitboxField = AbstractChest::class.java
+        .getAsPublicField("hb")
 
     val potionUseHitbox: Hitbox?
         get() = potionUseHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox?
@@ -114,4 +117,7 @@ object SpireInternals {
 
     val cardSelectConfirmButtonIsHidden: Boolean
         get() = cardSelectConfirmButtonIsHiddenField.getBoolean(AbstractDungeon.handCardSelectScreen.button)
+
+    fun chestHitbox(chest: AbstractChest): Hitbox? =
+        chestHitboxField.get(chest) as Hitbox?
 }

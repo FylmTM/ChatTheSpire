@@ -13,7 +13,7 @@ object CardRewardSingingBowlCommand : Command {
 
     override val prefix: String = "bowl"
 
-    override val syntax: String = "bowl - Singing Bowl"
+    override val syntax: String = "bowl - singing bowl"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         if (GameState.currentScreen != AbstractDungeon.CurrentScreen.CARD_REWARD) {

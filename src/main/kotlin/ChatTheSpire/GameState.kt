@@ -9,6 +9,7 @@ import ChatTheSpire.GameState.State.HAND_SELECT
 import ChatTheSpire.GameState.State.MAP
 import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
 import ChatTheSpire.GameState.State.REST
+import ChatTheSpire.GameState.State.TREASURE
 import ChatTheSpire.GameState.State.UNKNOWN
 import ChatTheSpire.command.CancelCommand
 import ChatTheSpire.command.CardCommand
@@ -29,11 +30,13 @@ import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.command.RestRoomOptionSelectCommand
+import ChatTheSpire.command.TreasureChestOpenCommand
 import ChatTheSpire.util.SafeSpire
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import com.megacrit.cardcrawl.rooms.AbstractRoom
 import com.megacrit.cardcrawl.rooms.RestRoom
+import com.megacrit.cardcrawl.rooms.TreasureRoom
 
 object GameState {
 
@@ -87,6 +90,15 @@ object GameState {
                 DrawPileCommand,
                 DiscardPileCommand,
                 ExhaustPileCommand
+            ),
+            votingSecondsScale = 1.0F
+        ),
+        TREASURE(
+            title = "Treasure room",
+            defaultCommand = null,
+            commands = listOf(
+                TreasureChestOpenCommand,
+                ProceedCommand
             ),
             votingSecondsScale = 1.0F
         ),
@@ -165,6 +177,10 @@ object GameState {
 
             if (SafeSpire.room is RestRoom) {
                 return REST
+            }
+
+            if (SafeSpire.room is TreasureRoom) {
+                return TREASURE
             }
 
             if (RoomEventDialog.optionList?.isNotEmpty() == true) {

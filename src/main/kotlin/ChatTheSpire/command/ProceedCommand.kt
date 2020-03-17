@@ -16,7 +16,7 @@ object ProceedCommand : Command {
 
     override val prefix: String = "n"
 
-    override val syntax: String = "n - Next/Proceed/Confirm/Skip"
+    override val syntax: String = "n - next/proceed/confirm/skip"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
         val hb = overlayProceed()
