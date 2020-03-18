@@ -2,6 +2,7 @@ package ChatTheSpire.chat
 
 import ChatTheSpire.control.VotingManager
 import ChatTheSpire.possiblyCommand
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.javacord.api.DiscordApi
 import org.javacord.api.DiscordApiBuilder
 
@@ -17,12 +18,14 @@ object Discord {
             .join()
 
         api?.addMessageCreateListener { event ->
-            if (!event.messageAuthor.isBotUser) {
-                event.channel.asServerChannel().ifPresent {
-                    if (it.name == "chat-the-spire") {
-                        val command = event.message.content
-                        if (possiblyCommand(command)) {
-                            VotingManager.vote(event.message.author.displayName, command)
+            if (AbstractDungeon.isPlayerInDungeon()) {
+                if (!event.messageAuthor.isBotUser) {
+                    event.channel.asServerChannel().ifPresent {
+                        if (it.name == "chat-the-spire") {
+                            val command = event.message.content
+                            if (possiblyCommand(command)) {
+                                VotingManager.vote(event.message.author.displayName, command)
+                            }
                         }
                     }
                 }

@@ -22,6 +22,7 @@ class ControlView : View() {
 
     override val root = vbox {
         prefWidth = 250.0
+        prefHeight = 500.0
         spacing = 10.0
         vgrow = Priority.ALWAYS
         style {
