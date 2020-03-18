@@ -142,7 +142,7 @@ object GameState {
                 ProceedCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 3.0F
+            votingSecondsScale = 4.0F
         ),
         MAP(
             title = "Map",
