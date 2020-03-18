@@ -1,6 +1,7 @@
 package ChatTheSpire
 
 import ChatTheSpire.chat.LoadSimulator
+import ChatTheSpire.chat.Twitch
 import basemod.BaseMod
 import basemod.interfaces.PostInitializeSubscriber
 import basemod.interfaces.PostRenderSubscriber
@@ -47,6 +48,7 @@ class ChatTheSpire : PostInitializeSubscriber, PostRenderSubscriber {
         initializeConsoleCommands()
         initializeControlPanel()
 
+        Twitch.listen()
         // Discord.listen()
         // LoadSimulator.listen()
     }
