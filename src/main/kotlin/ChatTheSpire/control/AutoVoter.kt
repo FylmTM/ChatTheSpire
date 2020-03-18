@@ -21,6 +21,8 @@ val VOTING_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(15, TimeUni
 val VOTING_STOPPED_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(1, TimeUnit.SECONDS))
 val PAUSE_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(5, TimeUnit.SECONDS))
 
+private val GO_EXTRA_PAUSE_AFTER = TimeUnit.NANOSECONDS.convert(5, TimeUnit.SECONDS)
+
 private val logger = LogManager.getLogger(CardCommand::class.java.name)
 
 class AutoVoter : AnimationTimer() {
@@ -73,10 +75,14 @@ class AutoVoter : AnimationTimer() {
                             )
 
                     if (shouldTransition) {
-                        logger.info("Transition to Voting")
-                        VotingManager.start()
-                        phase.set(Phase.Voting)
-                        start = now
+                        if (elapsed.value > PAUSE_SECONDS.value + GO_EXTRA_PAUSE_AFTER) {
+                            start = now
+                        } else {
+                            logger.info("Transition to Voting")
+                            VotingManager.start()
+                            phase.set(Phase.Voting)
+                            start = now
+                        }
                     }
                 }
                 else -> throw RuntimeException("Unexpected null")

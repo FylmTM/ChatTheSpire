@@ -182,7 +182,7 @@ class VotingView : View() {
             }
         }
         tableview(VotingManager.results) {
-            minHeight = 150.0
+            minHeight = 200.0
             prefHeight = 200.0
             style {
                 fontSize = 20.px
