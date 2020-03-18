@@ -17,6 +17,10 @@ object TreasureChestOpenCommand : Command {
     override val syntax: String = "t - open treasure chest"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         val chest = when (val room = SafeSpire.room) {
             is TreasureRoom -> room.chest
             is TreasureRoomBoss -> room.chest

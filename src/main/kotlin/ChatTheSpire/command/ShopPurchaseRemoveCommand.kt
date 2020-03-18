@@ -16,6 +16,10 @@ object ShopPurchaseRemoveCommand : Command {
     override val syntax: String = "r - purchase remove card"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (GameState.currentScreen != AbstractDungeon.CurrentScreen.SHOP) {
             logger.info("Not in shop screen")
             return false

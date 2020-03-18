@@ -16,6 +16,10 @@ object MapBossCommand : Command {
     override val syntax: String = "boss - fight boss!"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (GameState.currentScreen != AbstractDungeon.CurrentScreen.MAP) {
             logger.info("Map is not opened")
             return false

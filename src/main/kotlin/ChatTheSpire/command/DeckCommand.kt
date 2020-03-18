@@ -15,6 +15,10 @@ object DeckCommand : Command {
     override val syntax: String = "d - open deck"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (SpireInternals.deckButtonDisabled) {
             logger.info("Deck button is disabled")
             return false

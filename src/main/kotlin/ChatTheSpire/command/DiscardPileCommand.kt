@@ -15,6 +15,10 @@ object DiscardPileCommand : Command {
     override val syntax: String = "s - open discard pile"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (AbstractDungeon.overlayMenu.discardPilePanel.isHidden) {
             logger.info("Discard pile panel is hidden")
             return false

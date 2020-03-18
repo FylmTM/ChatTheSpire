@@ -16,6 +16,10 @@ object MerchantOpenShopCommand : Command {
     override val syntax: String = "m - ask merchant to open shop"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (AbstractDungeon.isScreenUp) {
             logger.info("There is screen up")
             return false

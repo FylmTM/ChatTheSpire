@@ -15,6 +15,10 @@ object DrawPileCommand : Command {
     override val syntax: String = "a - open draw pile"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (AbstractDungeon.overlayMenu.combatDeckPanel.isHidden) {
             logger.info("Draw pile panel is hidden")
             return false

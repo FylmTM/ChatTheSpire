@@ -194,24 +194,20 @@ object CommandManager {
 }
 
 private val whitespaceRegex = "\\s+".toRegex()
-private val commandWithoutPrefixRegex = "^\\d+(\\s+\\d+)*$".toRegex()
-private val commandRegex = "^(${allPrefixes.joinToString("|")})(\\s+\\d+)*$".toRegex()
+private val commandWithoutPrefixRegex = "^\\d+(\\s+\\d+)*$".toRegex(RegexOption.IGNORE_CASE)
+private val commandRegex = "^(${allPrefixes.joinToString("|")})(\\s+\\d+)*$".toRegex(RegexOption.IGNORE_CASE)
 
 fun extract(command: String): Pair<Command, List<Int>>? {
     val gameState = GameState.state
-    if (command.isBlank()) {
-        return null
-    }
-    val cleanCommand = command.trim().toLowerCase()
-    if (gameState.defaultCommand != null && cleanCommand.matches(commandWithoutPrefixRegex)) {
-        return Pair(gameState.defaultCommand, cleanCommand.split(whitespaceRegex).map(String::toInt))
+    if (gameState.defaultCommand != null && command.matches(commandWithoutPrefixRegex)) {
+        return Pair(gameState.defaultCommand, command.split(whitespaceRegex).map(String::toInt))
     }
 
-    if (!cleanCommand.matches(commandRegex)) {
+    if (!command.matches(commandRegex)) {
         return null
     }
 
-    val parts = cleanCommand.split(whitespaceRegex)
+    val parts = command.split(whitespaceRegex)
     val prefix = parts[0]
     val parameters = parts.subList(1, parts.size).map(String::toInt)
 
@@ -221,4 +217,12 @@ fun extract(command: String): Pair<Command, List<Int>>? {
 
 fun possiblyCommand(command: String): Boolean {
     return command.matches(commandWithoutPrefixRegex) || command.matches(commandRegex)
+}
+
+fun normalizeCommand(command: String): String {
+    return command
+        .trim()
+        .toLowerCase()
+        .split(whitespaceRegex)
+        .joinToString(" ")
 }

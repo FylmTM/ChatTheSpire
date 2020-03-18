@@ -15,6 +15,10 @@ object EndTurnCommand : Command {
     override val syntax: String = "e - end turn"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (!AbstractDungeon.overlayMenu.endTurnButton.enabled) {
             logger.info("End turn button is not enabled")
             return false

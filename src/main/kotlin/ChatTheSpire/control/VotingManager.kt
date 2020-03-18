@@ -1,6 +1,7 @@
 package ChatTheSpire.control
 
 import ChatTheSpire.CommandManager
+import ChatTheSpire.normalizeCommand
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
@@ -23,7 +24,6 @@ object VotingManager {
     private val rejectedCache: MutableSet<String> = HashSet()
 
     fun start() {
-        CommandResultsLogController.clear()
         results.clear()
         userCache.clear()
         acceptedCache.clear()
@@ -43,8 +43,11 @@ object VotingManager {
 
     fun vote(user: String, command: String) {
         synchronized(this) {
-            val status = if (open.value) {
-                if (userCache.contains(user)) {
+            if (open.value) {
+                @Suppress("NAME_SHADOWING")
+                val command = normalizeCommand(command)
+
+                val status = if (userCache.contains(user)) {
                     CommandResultLogEntryStatus.SKIP
                 } else if (rejectedCache.contains(command)) {
                     CommandResultLogEntryStatus.REJECTED
@@ -68,12 +71,14 @@ object VotingManager {
                         CommandResultLogEntryStatus.REJECTED
                     }
                 }
+                runLater {
+                    CommandResultsLogController.add(CommandResultLogEntry(user, command, status))
+                }
             } else {
                 CommandResultLogEntryStatus.SKIP
-            }
-
-            runLater {
-                CommandResultsLogController.add(CommandResultLogEntry(user, command, status))
+                runLater {
+                    CommandResultsLogController.add(CommandResultLogEntry(user, command, CommandResultLogEntryStatus.SKIP))
+                }
             }
         }
     }

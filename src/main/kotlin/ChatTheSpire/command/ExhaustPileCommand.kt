@@ -15,6 +15,10 @@ object ExhaustPileCommand : Command {
     override val syntax: String = "x - open exhausted cards"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         if (AbstractDungeon.overlayMenu.exhaustPanel.isHidden) {
             logger.info("Exhausted pile panel is hidden")
             return false

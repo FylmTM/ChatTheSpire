@@ -17,6 +17,11 @@ object CancelCommand : Command {
     override val syntax: String = "b - back/return/cancel"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
+
         val hb = overlayCancel() ?: bossRelicCancel()
 
         if (hb == null) {

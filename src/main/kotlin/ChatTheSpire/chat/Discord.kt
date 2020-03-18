@@ -16,7 +16,6 @@ object Discord {
             .login()
             .join()
 
-        // Add a listener which answers with "Pong!" if someone writes "!ping"
         api?.addMessageCreateListener { event ->
             if (!event.messageAuthor.isBotUser) {
                 event.channel.asServerChannel().ifPresent {

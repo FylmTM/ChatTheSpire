@@ -152,7 +152,7 @@ object GameState {
                 MapBossCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 2.0F
+            votingSecondsScale = 1.5F
         ),
         GRID(
             title = "Grid",

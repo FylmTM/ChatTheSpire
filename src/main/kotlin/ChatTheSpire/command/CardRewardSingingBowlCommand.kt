@@ -20,6 +20,10 @@ object CardRewardSingingBowlCommand : Command {
             logger.info("Not in card reward screen")
             return false
         }
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
 
         val button = SpireInternals.cardRewardBowlButton
         if (button == null) {

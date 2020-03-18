@@ -19,6 +19,10 @@ object ProceedCommand : Command {
     override val syntax: String = "n - next/proceed/confirm/skip"
 
     override fun execute(parameters: List<Int>, doAction: Boolean): Boolean {
+        if (parameters.isNotEmpty()) {
+            logger.info("Parameters are not supported")
+            return false
+        }
         val hb = overlayProceed()
             ?: restRoomProceed()
             ?: cardRewardSkip()
