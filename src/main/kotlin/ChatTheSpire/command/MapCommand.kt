@@ -41,6 +41,7 @@ object MapCommand : Command {
                 Automation.rest()
                 Automation.click()
                 Automation.scrollTo(mapNode.hb)
+                Automation.normalSleep()
                 Automation.click(mapNode.hb)
                 Automation.rest()
             }

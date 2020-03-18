@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.core.Settings
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import com.megacrit.cardcrawl.helpers.FontHelper
+import com.megacrit.cardcrawl.helpers.Hitbox
 import com.megacrit.cardcrawl.potions.PotionSlot
 import com.megacrit.cardcrawl.rooms.AbstractRoom
 import com.megacrit.cardcrawl.rooms.RestRoom
@@ -88,31 +89,14 @@ fun renderOverlay(sb: SpriteBatch, font: BitmapFont) {
 
     // Deck button
     if (!SpireInternals.deckButtonDisabled) {
-        font.draw(
-            sb,
-            "D",
-            AbstractDungeon.topPanel.deckHb.x,
-            AbstractDungeon.topPanel.deckHb.y - 5.0F * Settings.scale,
-            AbstractDungeon.topPanel.deckHb.width,
-            Align.center,
-            false
-        )
+        renderTextBelowCentered("D", AbstractDungeon.topPanel.deckHb, sb, font, yAlign = -5.0F)
     }
 
     // Overlay proceed
     if (!SpireInternals.proceedIsHidden) {
         SpireInternals.proceedHitbox?.let {
-            font.draw(
-                sb,
-                "N",
-                it.x,
-                it.y,
-                it.width,
-                Align.center,
-                false
-            )
+            renderTextBelowCentered("N", it, sb, font)
         }
-        SpireInternals.proceedHitbox
     }
 
     // End turn button
@@ -131,15 +115,7 @@ fun renderOverlay(sb: SpriteBatch, font: BitmapFont) {
     // Overlay cancel
     if (!AbstractDungeon.overlayMenu.cancelButton.isHidden) {
         AbstractDungeon.overlayMenu.cancelButton.hb?.let {
-            font.draw(
-                sb,
-                "B",
-                it.x,
-                it.y,
-                it.width,
-                Align.center,
-                false
-            )
+            renderTextBelowCentered("B", it, sb, font)
         }
         SpireInternals.proceedHitbox
     }
@@ -149,11 +125,11 @@ private fun renderScreens(sb: SpriteBatch, font: BitmapFont) {
     when (GameState.currentScreen) {
         AbstractDungeon.CurrentScreen.MAP -> {
             SafeSpire.nextMapNodes.forEachIndexed { i, node ->
-                font.draw(sb, "${i + 1}", node.hb.x, node.hb.y, node.hb.width, Align.center, false)
+                renderTextBelowCentered("${i + 1}", node.hb, sb, font)
             }
             if (SafeSpire.isNextRoomBoss) {
                 val hb = AbstractDungeon.dungeonMapScreen.map.bossHb
-                font.draw(sb, "boss", hb.x, hb.y - 10 * Settings.scale, hb.width, Align.center, false)
+                renderTextBelowCentered("boss", hb, sb, font, yAlign = -10.0F)
             }
         }
         AbstractDungeon.CurrentScreen.COMBAT_REWARD -> {
@@ -168,130 +144,94 @@ private fun renderScreens(sb: SpriteBatch, font: BitmapFont) {
         }
         AbstractDungeon.CurrentScreen.CARD_REWARD -> {
             AbstractDungeon.cardRewardScreen?.rewardGroup?.forEachIndexed { i, card ->
-                font.draw(
-                    sb,
-                    "${i + 1}",
-                    card.hb.x,
-                    card.hb.y - 10.0F * Settings.scale,
-                    card.hb.width,
-                    Align.center,
-                    false
-                )
+                renderTextBelowCentered("${i + 1}", card.hb, sb, font, yAlign = -10.0F)
             }
 
             SpireInternals.cardRewardSkipButton?.let {
                 if (!SpireInternals.skipButtonIsHidden(it)) {
-                    font.draw(
-                        sb,
-                        "N",
-                        it.hb.x,
-                        it.hb.y,
-                        it.hb.width,
-                        Align.center,
-                        false
-                    )
+                    renderTextBelowCentered("N", it.hb, sb, font)
                 }
             }
             SpireInternals.cardRewardBowlButton?.let {
                 if (!it.isHidden) {
-                    font.draw(
-                        sb,
-                        "bowl",
-                        it.hb.x,
-                        it.hb.y,
-                        it.hb.width,
-                        Align.center,
-                        false
-                    )
+                    renderTextBelowCentered("bowl", it.hb, sb, font)
                 }
             }
         }
         AbstractDungeon.CurrentScreen.GRID -> {
             if (AbstractDungeon.gridSelectScreen?.confirmScreenUp == false) {
                 AbstractDungeon.gridSelectScreen?.targetGroup?.group?.forEachIndexed { i, card ->
-                    font.draw(
-                        sb,
-                        "${i + 1}",
-                        card.hb.x,
-                        card.hb.y + 25.0F * Settings.scale,
-                        card.hb.width,
-                        Align.center,
-                        false
-                    )
+                    renderTextBelowCentered("${i + 1}", card.hb, sb, font, yAlign = 25.0F)
                 }
             }
 
             if (!SpireInternals.gridSelectConfirmButtonIsHidden) {
                 AbstractDungeon.gridSelectScreen.confirmButton.hb.let {
-                    font.draw(
-                        sb,
-                        "N",
-                        it.x,
-                        it.y,
-                        it.width,
-                        Align.center,
-                        false
-                    )
+                    renderTextBelowCentered("N", it, sb, font)
                 }
             }
         }
         AbstractDungeon.CurrentScreen.HAND_SELECT -> {
             if (!SpireInternals.cardSelectConfirmButtonIsHidden) {
                 AbstractDungeon.handCardSelectScreen.button.hb.let {
-                    font.draw(
-                        sb,
-                        "N",
-                        it.x,
-                        it.y,
-                        it.width,
-                        Align.center,
-                        false
-                    )
+                    renderTextBelowCentered("N", it, sb, font)
                 }
             }
             renderHand(sb, font)
         }
         AbstractDungeon.CurrentScreen.BOSS_REWARD -> {
-            AbstractDungeon.bossRelicScreen?.relics?.forEachIndexed() { i, relic ->
-                font.draw(
-                    sb,
-                    "${i + 1}",
-                    relic.hb.x,
-                    relic.hb.y,
-                    relic.hb.width,
-                    Align.center,
-                    false
-                )
+            AbstractDungeon.bossRelicScreen?.relics?.forEachIndexed { i, relic ->
+                renderTextBelowCentered("${i + 1}", relic.hb, sb, font)
             }
             val cancelButton = SpireInternals.bossRelicCancelButton
             val confirmButton = AbstractDungeon.bossRelicScreen?.confirmButton
 
             if (cancelButton != null && !cancelButton.isHidden) {
                 cancelButton.hb?.let {
-                    font.draw(
-                        sb,
-                        "B",
-                        it.x,
-                        it.y,
-                        it.width,
-                        Align.center,
-                        false
-                    )
+                    renderTextBelowCentered("B", it, sb, font)
                 }
             }
 
             if (confirmButton != null && !SpireInternals.confirmButtonIsHidden(confirmButton)) {
                 confirmButton.hb?.let {
-                    font.draw(
-                        sb,
-                        "N",
-                        it.x,
-                        it.y,
-                        it.width,
-                        Align.center,
-                        false
-                    )
+                    renderTextBelowCentered("N", it, sb, font)
                 }
+            }
+        }
+        AbstractDungeon.CurrentScreen.SHOP -> {
+            val yAlign = 40.0F
+            val shop = AbstractDungeon.shopScreen
+            shop.coloredCards.forEachIndexed { i, card ->
+                renderTextAboveCentered("1${i + 1}", card.hb, sb, font, yAlign = yAlign)
+            }
+            shop.colorlessCards.forEachIndexed { i, card ->
+                renderTextAboveCentered("2${i + 1}", card.hb, sb, font, yAlign = yAlign)
+            }
+            SpireInternals.shopRelics.forEachIndexed { i, relic ->
+                if (!relic.isPurchased) {
+                    val slot = SpireInternals.storeRelicSlot(relic)
+                    renderTextAboveCentered("3${slot + 1}", relic.relic.hb, sb, font, yAlign = yAlign)
+                }
+            }
+            SpireInternals.shopPotions.forEachIndexed { i, potion ->
+                if (!potion.isPurchased) {
+                    val slot = SpireInternals.storePotionSlot(potion)
+                    renderTextAboveCentered("4${slot + 1}", potion.potion.hb, sb, font, yAlign = yAlign)
+                }
+            }
+
+            if (shop.purgeAvailable) {
+                val width = 110.0F * Settings.scale;
+                val height = 150.0F * Settings.scale;
+                font.draw(
+                    sb,
+                    "R",
+                    SpireInternals.shopPurgeCardX - width,
+                    SpireInternals.shopPurgeCardY + height + (yAlign * Settings.scale),
+                    width * 2,
+                    Align.center,
+                    false
+                )
             }
         }
         else -> {
@@ -398,15 +338,7 @@ fun renderRestRoom(sb: SpriteBatch, font: BitmapFont, room: RestRoom) {
 
     if (!SpireInternals.confirmButtonIsHidden(room.campfireUI.confirmButton)) {
         room.campfireUI.confirmButton.hb.let {
-            font.draw(
-                sb,
-                "N",
-                it.x,
-                it.y,
-                it.width,
-                Align.center,
-                false
-            )
+            renderTextBelowCentered("N", it, sb, font)
         }
     }
 }
@@ -414,44 +346,20 @@ fun renderRestRoom(sb: SpriteBatch, font: BitmapFont, room: RestRoom) {
 fun renderTreasureRoom(sb: SpriteBatch, font: BitmapFont, room: TreasureRoom) {
     val chest = room.chest
     SpireInternals.chestHitbox(chest)?.let {
-        font.draw(
-            sb,
-            "T",
-            it.x,
-            it.y,
-            it.width,
-            Align.center,
-            false
-        )
+        renderTextBelowCentered("T", it, sb, font)
     }
 }
 
 fun renderTreasureRoomBoss(sb: SpriteBatch, font: BitmapFont, room: TreasureRoomBoss) {
     val chest = room.chest
     SpireInternals.chestHitbox(chest)?.let {
-        font.draw(
-            sb,
-            "T",
-            it.x,
-            it.y - 30 * Settings.scale,
-            it.width,
-            Align.center,
-            false
-        )
+        renderTextBelowCentered("T", it, sb, font, yAlign = -30.0F)
     }
 }
 
 fun renderShopRoom(sb: SpriteBatch, font: BitmapFont, room: ShopRoom) {
     room.merchant?.hb?.let {
-        font.draw(
-            sb,
-            "M",
-            it.x,
-            it.y,
-            it.width,
-            Align.center,
-            false
-        )
+        renderTextBelowCentered("M", it, sb, font)
     }
 }
 
@@ -477,4 +385,28 @@ private fun renderHand(sb: SpriteBatch, font: BitmapFont) {
             }
         }
     }
+}
+
+fun renderTextBelowCentered(text: String, hb: Hitbox, sb: SpriteBatch, font: BitmapFont, yAlign: Float = 0.0F) {
+    font.draw(
+        sb,
+        text,
+        hb.x,
+        hb.y + (yAlign * Settings.scale),
+        hb.width,
+        Align.center,
+        false
+    )
+}
+
+fun renderTextAboveCentered(text: String, hb: Hitbox, sb: SpriteBatch, font: BitmapFont, yAlign: Float = 0.0F) {
+    font.draw(
+        sb,
+        text,
+        hb.x,
+        hb.y + hb.height + (yAlign * Settings.scale),
+        hb.width,
+        Align.center,
+        false
+    )
 }

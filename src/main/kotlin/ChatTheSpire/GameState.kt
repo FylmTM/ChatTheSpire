@@ -36,6 +36,8 @@ import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
 import ChatTheSpire.command.RestRoomOptionSelectCommand
+import ChatTheSpire.command.ShopPurchaseCommand
+import ChatTheSpire.command.ShopPurchaseRemoveCommand
 import ChatTheSpire.command.TreasureChestOpenCommand
 import ChatTheSpire.util.SafeSpire
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
@@ -182,8 +184,12 @@ object GameState {
         ),
         SHOP(
             title = "Shop",
-            defaultCommand = null,
-            commands = listOf(),
+            defaultCommand = ShopPurchaseCommand,
+            commands = listOf(
+                ShopPurchaseCommand,
+                ShopPurchaseRemoveCommand,
+                CancelCommand
+            ),
             votingSecondsScale = 4.0F
         );
 

@@ -9,6 +9,9 @@ import com.megacrit.cardcrawl.screens.CardRewardScreen
 import com.megacrit.cardcrawl.screens.DungeonMapScreen
 import com.megacrit.cardcrawl.screens.mainMenu.MenuCancelButton
 import com.megacrit.cardcrawl.screens.select.BossRelicSelectScreen
+import com.megacrit.cardcrawl.shop.ShopScreen
+import com.megacrit.cardcrawl.shop.StorePotion
+import com.megacrit.cardcrawl.shop.StoreRelic
 import com.megacrit.cardcrawl.ui.buttons.CardSelectConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.ConfirmButton
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton
@@ -68,6 +71,18 @@ object SpireInternals {
         .getAsPublicField("hb")
     private val bossRelicCancelButtonField = BossRelicSelectScreen::class.java
         .getAsPublicField("cancelButton")
+    private val shopRelicsField = ShopScreen::class.java
+        .getAsPublicField("relics")
+    private val shopPotionsField = ShopScreen::class.java
+        .getAsPublicField("potions")
+    private val shopPurgeCardXField = ShopScreen::class.java
+        .getAsPublicField("purgeCardX")
+    private val shopPurgeCardYField = ShopScreen::class.java
+        .getAsPublicField("purgeCardY")
+    private val storeRelicSlotField = StoreRelic::class.java
+        .getAsPublicField("slot")
+    private val storePotionSlotField = StorePotion::class.java
+        .getAsPublicField("slot")
 
     val potionUseHitbox: Hitbox?
         get() = potionUseHitboxField.get(AbstractDungeon.topPanel.potionUi) as Hitbox?
@@ -127,4 +142,22 @@ object SpireInternals {
 
     val bossRelicCancelButton: MenuCancelButton?
         get() = bossRelicCancelButtonField.get(AbstractDungeon.bossRelicScreen) as MenuCancelButton?
+
+    @Suppress("UNCHECKED_CAST")
+    val shopRelics: ArrayList<StoreRelic>
+        get() = shopRelicsField.get(AbstractDungeon.shopScreen) as ArrayList<StoreRelic>
+
+    @Suppress("UNCHECKED_CAST")
+    val shopPotions: ArrayList<StorePotion>
+        get() = shopPotionsField.get(AbstractDungeon.shopScreen) as ArrayList<StorePotion>
+
+    val shopPurgeCardX: Float
+        get() = shopPurgeCardXField.getFloat(AbstractDungeon.shopScreen)
+
+    val shopPurgeCardY: Float
+        get() = shopPurgeCardYField.getFloat(AbstractDungeon.shopScreen)
+
+    fun storeRelicSlot(relic: StoreRelic): Int = storeRelicSlotField.getInt(relic)
+
+    fun storePotionSlot(potion: StorePotion): Int = storePotionSlotField.getInt(potion)
 }

@@ -3,11 +3,8 @@ package ChatTheSpire.command
 import ChatTheSpire.util.Automation
 import ChatTheSpire.util.Job
 import ChatTheSpire.util.SafeSpire
-import ChatTheSpire.util.SpireInternals
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.rooms.ShopRoom
-import com.megacrit.cardcrawl.rooms.TreasureRoom
-import com.megacrit.cardcrawl.rooms.TreasureRoomBoss
 import org.apache.logging.log4j.LogManager
 
 private val logger = LogManager.getLogger(MerchantOpenShopCommand::class.java.name)
