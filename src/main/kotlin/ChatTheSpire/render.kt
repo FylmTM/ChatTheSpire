@@ -207,13 +207,13 @@ private fun renderScreens(sb: SpriteBatch, font: BitmapFont) {
             shop.colorlessCards.forEachIndexed { i, card ->
                 renderTextAboveCentered("2${i + 1}", card.hb, sb, font, yAlign = yAlign)
             }
-            SpireInternals.shopRelics.forEachIndexed { i, relic ->
+            SpireInternals.shopRelics.forEach { relic ->
                 if (!relic.isPurchased) {
                     val slot = SpireInternals.storeRelicSlot(relic)
                     renderTextAboveCentered("3${slot + 1}", relic.relic.hb, sb, font, yAlign = yAlign)
                 }
             }
-            SpireInternals.shopPotions.forEachIndexed { i, potion ->
+            SpireInternals.shopPotions.forEach { potion ->
                 if (!potion.isPurchased) {
                     val slot = SpireInternals.storePotionSlot(potion)
                     renderTextAboveCentered("4${slot + 1}", potion.potion.hb, sb, font, yAlign = yAlign)
