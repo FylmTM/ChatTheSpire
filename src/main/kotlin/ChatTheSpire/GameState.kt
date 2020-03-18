@@ -8,8 +8,10 @@ import ChatTheSpire.GameState.State.DIALOG
 import ChatTheSpire.GameState.State.GRID
 import ChatTheSpire.GameState.State.HAND_SELECT
 import ChatTheSpire.GameState.State.MAP
+import ChatTheSpire.GameState.State.MERCHANT
 import ChatTheSpire.GameState.State.NOT_IN_DUNGEON
 import ChatTheSpire.GameState.State.REST
+import ChatTheSpire.GameState.State.SHOP
 import ChatTheSpire.GameState.State.TREASURE
 import ChatTheSpire.GameState.State.UNKNOWN
 import ChatTheSpire.command.BossRewardSelectCommand
@@ -29,6 +31,7 @@ import ChatTheSpire.command.GridSelectCardCommand
 import ChatTheSpire.command.HandCardSelectCommand
 import ChatTheSpire.command.MapBossCommand
 import ChatTheSpire.command.MapCommand
+import ChatTheSpire.command.MerchantOpenShopCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
@@ -39,6 +42,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import com.megacrit.cardcrawl.events.RoomEventDialog
 import com.megacrit.cardcrawl.rooms.AbstractRoom
 import com.megacrit.cardcrawl.rooms.RestRoom
+import com.megacrit.cardcrawl.rooms.ShopRoom
 import com.megacrit.cardcrawl.rooms.TreasureRoom
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss
 
@@ -126,7 +130,7 @@ object GameState {
                 CardRewardSingingBowlCommand,
                 DeckCommand
             ),
-            votingSecondsScale = 2.5F
+            votingSecondsScale = 2.0F
         ),
         BOSS_REWARD(
             title = "Boss Reward",
@@ -166,6 +170,21 @@ object GameState {
                 ProceedCommand
             ),
             votingSecondsScale = 1.5F
+        ),
+        MERCHANT(
+            title = "Merchant",
+            defaultCommand = null,
+            commands = listOf(
+                MerchantOpenShopCommand,
+                ProceedCommand
+            ),
+            votingSecondsScale = 1.0F
+        ),
+        SHOP(
+            title = "Shop",
+            defaultCommand = null,
+            commands = listOf(),
+            votingSecondsScale = 4.0F
         );
 
         val prefixes = commands.map(Command::prefix).toHashSet()
@@ -187,6 +206,7 @@ object GameState {
                     AbstractDungeon.CurrentScreen.GRID -> GRID
                     AbstractDungeon.CurrentScreen.HAND_SELECT -> HAND_SELECT
                     AbstractDungeon.CurrentScreen.BOSS_REWARD -> BOSS_REWARD
+                    AbstractDungeon.CurrentScreen.SHOP -> SHOP
                     else -> UNKNOWN
                 }
             }
@@ -201,6 +221,10 @@ object GameState {
 
             if (SafeSpire.room is TreasureRoomBoss) {
                 return TREASURE
+            }
+
+            if (SafeSpire.room is ShopRoom) {
+                return MERCHANT
             }
 
             if (RoomEventDialog.optionList?.isNotEmpty() == true) {

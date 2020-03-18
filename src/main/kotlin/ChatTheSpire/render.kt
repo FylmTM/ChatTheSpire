@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper
 import com.megacrit.cardcrawl.potions.PotionSlot
 import com.megacrit.cardcrawl.rooms.AbstractRoom
 import com.megacrit.cardcrawl.rooms.RestRoom
+import com.megacrit.cardcrawl.rooms.ShopRoom
 import com.megacrit.cardcrawl.rooms.TreasureRoom
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss
 
@@ -39,12 +40,19 @@ fun renderHints(sb: SpriteBatch, font: BitmapFont) {
         renderCombatPanels(sb, font)
         renderEvents(sb, font, room)
 
-        if (room is RestRoom) {
-            renderRestRoom(sb, font, room)
-        } else if (room is TreasureRoom) {
-            renderTreasureRoom(sb, font, room)
-        } else if (room is TreasureRoomBoss) {
-            renderTreasureRoomBoss(sb, font, room)
+        when (room) {
+            is RestRoom -> {
+                renderRestRoom(sb, font, room)
+            }
+            is TreasureRoom -> {
+                renderTreasureRoom(sb, font, room)
+            }
+            is TreasureRoomBoss -> {
+                renderTreasureRoomBoss(sb, font, room)
+            }
+            is ShopRoom -> {
+                renderShopRoom(sb, font, room)
+            }
         }
     }
 }
@@ -426,6 +434,20 @@ fun renderTreasureRoomBoss(sb: SpriteBatch, font: BitmapFont, room: TreasureRoom
             "T",
             it.x,
             it.y - 30 * Settings.scale,
+            it.width,
+            Align.center,
+            false
+        )
+    }
+}
+
+fun renderShopRoom(sb: SpriteBatch, font: BitmapFont, room: ShopRoom) {
+    room.merchant?.hb?.let {
+        font.draw(
+            sb,
+            "M",
+            it.x,
+            it.y,
             it.width,
             Align.center,
             false

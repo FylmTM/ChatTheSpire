@@ -17,6 +17,7 @@ import ChatTheSpire.command.GridSelectCardCommand
 import ChatTheSpire.command.HandCardSelectCommand
 import ChatTheSpire.command.MapBossCommand
 import ChatTheSpire.command.MapCommand
+import ChatTheSpire.command.MerchantOpenShopCommand
 import ChatTheSpire.command.PotionDestroyCommand
 import ChatTheSpire.command.PotionUseCommand
 import ChatTheSpire.command.ProceedCommand
@@ -38,6 +39,7 @@ import ChatTheSpire.console.GridSelectCardConsoleCommand
 import ChatTheSpire.console.HandCardSelectConsoleCommand
 import ChatTheSpire.console.MapBossConsoleCommand
 import ChatTheSpire.console.MapConsoleCommand
+import ChatTheSpire.console.MerchantOpenShopConsoleCommand
 import ChatTheSpire.console.PotionDestroyConsoleCommand
 import ChatTheSpire.console.PotionUseConsoleCommand
 import ChatTheSpire.console.ProceedConsoleCommand
@@ -137,6 +139,10 @@ val commands = listOf(
     CommandData(
         command = BossRewardSelectCommand,
         consoleCommandClass = BossRewardSelectConsoleCommand::class.java
+    ),
+    CommandData(
+        command = MerchantOpenShopCommand,
+        consoleCommandClass = MerchantOpenShopConsoleCommand::class.java
     )
 )
 private val commandsMap = commands.map { it.command.prefix to it }.toMap().also {
