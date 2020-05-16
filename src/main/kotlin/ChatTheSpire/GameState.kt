@@ -77,7 +77,7 @@ object GameState {
                 DialogCommand,
                 PotionDestroyCommand
             ),
-            votingSecondsScale = 2.0F
+            votingSecondsScale = 1.0F
         ),
         REST(
             title = "Rest",
@@ -152,7 +152,7 @@ object GameState {
                 MapBossCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 1.5F
+            votingSecondsScale = 1.0F
         ),
         GRID(
             title = "Grid",
@@ -162,7 +162,7 @@ object GameState {
                 ProceedCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 2.5F
+            votingSecondsScale = 2.0F
         ),
         HAND_SELECT(
             title = "Hand select",
@@ -190,7 +190,7 @@ object GameState {
                 ShopPurchaseRemoveCommand,
                 CancelCommand
             ),
-            votingSecondsScale = 4.0F
+            votingSecondsScale = 3.0F
         );
 
         val prefixes = commands.map(Command::prefix).toHashSet()

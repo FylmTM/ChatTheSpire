@@ -17,7 +17,7 @@ enum class Phase {
     Pause
 }
 
-val VOTING_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(15, TimeUnit.SECONDS))
+val VOTING_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(20, TimeUnit.SECONDS))
 val VOTING_STOPPED_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(1, TimeUnit.SECONDS))
 val PAUSE_SECONDS = SimpleLongProperty(TimeUnit.NANOSECONDS.convert(5, TimeUnit.SECONDS))
 

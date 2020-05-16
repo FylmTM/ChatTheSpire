@@ -36,7 +36,14 @@ object VotingManager {
     }
 
     fun perform() {
-        results.firstOrNull()
+        val result = results.firstOrNull() ?: return
+
+        val randomResultWithSameCount = results
+            .filter {it.count == result.count}
+            .shuffled()
+            .firstOrNull()
+
+        randomResultWithSameCount
             ?.command
             ?.let(CommandManager::perform)
     }

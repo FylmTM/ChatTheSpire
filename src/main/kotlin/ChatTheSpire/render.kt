@@ -100,16 +100,18 @@ fun renderOverlay(sb: SpriteBatch, font: BitmapFont) {
     }
 
     // End turn button
-    SpireInternals.endTurnHitbox?.let {
-        font.draw(
-            sb,
-            "E",
-            it.x,
-            it.y + it.height + 20 * Settings.scale,
-            it.width,
-            Align.center,
-            false
-        )
+    if (!SpireInternals.endTurnIsHidden) {
+        SpireInternals.endTurnHitbox?.let {
+            font.draw(
+                sb,
+                "E",
+                it.x,
+                it.y + it.height + 20 * Settings.scale,
+                it.width,
+                Align.center,
+                false
+            )
+        }
     }
 
     // Overlay cancel

@@ -43,6 +43,8 @@ object SpireInternals {
         .getAsPublicField("hb")
     private val proceedIsHiddenField = ProceedButton::class.java
         .getAsPublicField("isHidden")
+    private val endTurnIsHiddenField = EndTurnButton::class.java
+        .getAsPublicField("isHidden")
     private val cardRewardSkipButtonField = CardRewardScreen::class.java
         .getAsPublicField("skipButton")
     private val cardRewardBowlButtonField = CardRewardScreen::class.java
@@ -98,6 +100,9 @@ object SpireInternals {
 
     val proceedIsHidden: Boolean
         get() = proceedIsHiddenField.getBoolean(AbstractDungeon.overlayMenu.proceedButton)
+
+    val endTurnIsHidden: Boolean
+        get() = endTurnIsHiddenField.getBoolean(AbstractDungeon.overlayMenu.endTurnButton)
 
     val cardRewardSkipButton: SkipCardButton?
         get() = cardRewardSkipButtonField.get(AbstractDungeon.cardRewardScreen) as SkipCardButton?
