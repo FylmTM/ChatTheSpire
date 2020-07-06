@@ -9,7 +9,8 @@ import com.gikk.twirk.types.users.TwitchUser
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import java.io.IOException
 
-private const val token = "oauth:lhl9z2nsok7yuupa95h5m0rd5h2g77"
+// WIP: Extract to external configuration
+private const val token = "CHANGEME"
 
 object Twitch {
     fun listen() {
