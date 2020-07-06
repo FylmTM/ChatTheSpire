@@ -6,7 +6,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon
 import org.javacord.api.DiscordApi
 import org.javacord.api.DiscordApiBuilder
 
-private const val token = "Njg4MDk3NDUxNzUxNTA1OTIw.Xmvgmw.mdoiLpmE_1Mi82Hrf_GR6IOF5r0"
+// WIP: Extract to configuration
+private const val token = "CHANGEME"
 
 object Discord {
 
